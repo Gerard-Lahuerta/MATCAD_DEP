@@ -1,0 +1,259 @@
+%IMPORTS
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage[catalan]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{ragged2e} 
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[dvipsnames]{xcolor}
+%\usepackage[table]{xcolor}
+\usepackage{float}
+\usepackage{chngcntr}
+\usepackage{ragged2e}
+\usepackage{multirow}
+\usepackage{vmargin}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{listings}
+\usepackage{xcolor,colortbl}
+\usepackage{booktabs}
+%\usepackage{slashbox}
+\definecolor{bluebell}{rgb}{0.64, 0.64, 0.82}
+\definecolor{atomictangerine}{rgb}{1.0, 0.6, 0.4}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{frenchblue}{rgb}{0.0, 0.45, 0.73}
+\definecolor{darkpastelgreen}{rgb}{0.01, 0.75, 0.24}
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{navy}{rgb}{0,0,128}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{amaranth}{rgb}{0.9, 0.17, 0.31}
+\definecolor{GRAY}{rgb}{0.75, 0.75, 0.75}
+\definecolor{deepfuchsia}{rgb}{0.76, 0.33, 0.76}
+\definecolor{deepmagenta}{rgb}{0.8, 0.0, 0.8}
+\definecolor{funcblue}{rgb}{0.36, 0.57, 0.9}
+\lstdefinestyle{mystyle}
+{language=c,
+    backgroundcolor=\color{white},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{RoyalBlue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    %numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstdefinestyle{Bash}
+{language=bash,
+keywordstyle=\color{blue},
+basicstyle=\ttfamily,
+morekeywords={peter@kbpet},
+morekeywords=[2]{make},
+keywordstyle=[2]{\color{blue}},
+literate={\$}{{\textcolor{blue}{\$}}}1 
+         {:}{{\textcolor{blue}{:}}}1
+         {~}{{\textcolor{blue}{\textasciitilde}}}1,
+}
+\lstdefinestyle{BASH}
+{language=bash,
+keywordstyle=\color{blue},
+basicstyle=\ttfamily,
+morekeywords={peter@kbpet},
+morekeywords=[2]{make},
+fontsize=5pt
+keywordstyle=[2]{\color{blue}},
+literate={\$}{{\textcolor{blue}{\$}}}1 
+         {:}{{\textcolor{blue}{:}}}1
+         {~}{{\textcolor{blue}{\textasciitilde}}}1,
+}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinelanguage{GERONA}{
+    classoffset = 1,
+    morekeywords = {for, if},
+    keywordstyle = \color{atomictangerine},
+    classoffset = 2,
+    alsoletter=\#,
+    morekeywords = {\#pragma, omp, parallel, ordered},
+    keywordstyle = \color{bluebell},
+    classoffset = 0,
+    sensitive = true,
+    morecomment = [l]{//},
+    morecomment = [s]{/*}{*/},
+    morecomment = [s]{/**}{*/},
+    commentstyle = \color{applegreen},
+    morestring = [b]",
+    morestring = [b]',
+}
+
+\lstdefinestyle{CStyle}{
+    %backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=GERONA
+}
+
+\lstset{style=CStyle}
+
+
+\setpapersize{A4}
+\setmargins{2.5cm}     % margen izquierdo
+{2.6cm}                % margen superior
+{16.5cm}               % anchura del texto
+{23.7cm}               % altura del texto
+{10pt}                 % altura de los encabezados
+{0cm}                  % espacio entre el texto y los encabezados
+{0pt}                  % altura del pie de página
+{1cm}                  % espacio entre el texto y el pie de página
+\renewcommand{\baselinestretch}{1.5}
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    {\bfseries\LARGE \hspace{1.9em} Universitat Autònoma de Barcelona\newline Facultat de Ciències\par}
+    \vspace{2cm}
+    {\hspace{-1em}\includegraphics[width=0.7\textwidth]{MatCAD3.jpg}\par}
+    \vspace{1cm}
+    {\scshape\Huge Pràctica 2\par} 
+    \vspace{1cm}
+    {\Large \itshape Autors: \par}
+    {\Large \hspace{-1.75em} Gerard Lahuerta \& Ona Sánchez \par}
+    {\Large 1601350 --- 1601181 \par}
+    \vspace{1cm}
+    {\Large 27 de Novembre del 2022\par}
+\end{titlepage}
+
+\justifying
+
+\newpage
+\section{Introducció}
+L'objectiu d'aquesta pràctica és optimitzar el temps d'execució del programa \textcolor{frenchblue}{energystorm}, programat al fitxer \textcolor{darkpastelgreen}{energy\_storm.c}. \\
+Per tal d'optimitzar el funcionament del programa, es recurrirà a la paralel·lització de totes les instruccions repetitives, sempre i quan sigui possible, que generin un cost computacional elevat, al fitxer \textcolor{darkpastelgreen}{energy\_storm\_acc.c}. \\
+\section{Anàlisi del problema}
+A l'estudi realitzat anteriorment sobre els temps de diversos bucles del programa\footnote{L'estudi esmentat és el ja entregat anteriorment, si es vol consultar és: \textcolor{blue}{\href{https://drive.google.com/file/d/1cSu44VuoF-0nm9SR1Bhz5VClLV0hwk4E/view?usp=sharing}{Estudi Pràctica 1 CAP}}}, es va veure que la fase que més tarda en executar-se en la simulació és el bucle iniciat a la linia \textbf{183}, ja que el percentatge de temps que s'hi inverteix és casi del 100\% del total del temps d'execució, pel que els esforços en optimitzar el codi haurien d'anar enfocats a aquest bucle.\\\\
+Per altra banda, també es va concloure que el bucle iniciat a la línia \textbf{198} podria ser paral·lelitzat, pel que s'ha d'estudiar quina és la millor manera d'optimitzar-lo.\\\\
+S'observen també bucles diversos que podrien unir-se en un de sol, com és el cas dels fors de les línies \textbf{175} i \textbf{176} (ja que usen el mateix rang de valors per l'índex k i no depenen entre ells), es procedirà, també, a paral·lelitzar aquest nou bucle conjunt per agilitzar els càlculs quan s'ha de fer moltes iteracions del mateix (ja que depen el nobre d'iteracions en funció del nombre de cèlul·les que hi introduïm).\\
+\newpage
+\section{Disseny de la solució}
+S'ha simplificat la paral·lelització de la millor manera possible per tal d'optimitzar al màxim el codi.\\
+S'ha separat el codi en tres blocs, dos paral·lelitzats amb la clàusula \textit{\#pragma acc kernels} i un bloc que no es pot paral·lelitzar de manera senzilla amb \textit{OpenACC} i que per tant s'hauria d'utilitzar la programació amb cuda.\\\\ 
+En el primer bloc, s'ha requerit la creació dins la memòria col·lectiva dels threads del vector \textit{layer\_copy}, aquest pas s'ha fet per a optimitzar la paral·lelització i evitar copiar un vector que inicialment està a 0. \\\\
+L'altre bloc paral·lelitzable amb \textit{OpenACC} ha requerit afegir un bucle més del que disposavem inicialment per a poder trobar la posició a on es troba el màxim del vector \textit{layer}. Tot i afegir aquest nou bucle, la paral·lelització ajuda a disminuir el seu cost. \\\\
+El bloc que no es pot paral·lelitzar amb OpenACC és degut a que conté un bucle que requereix l'utilització d'un vector (\textit{posval}) que està contingut dintre d'una estructura que a la vegada és guardada dins d'un altre vector (\textit{storms}). Aquest procés fa que el compilador no pugui accedir correctament a la posició de memòria que necessitem per fer els càlculs, pel que únicament es pot paral·lelitzar mitjançant cuda, assegurant-te que hi accedeixes correctament a la posició.\\\\
+En cas de voler consultar les zones modificades, en les seccions de codi hi ha indicades les files on es troben les comandes al fitxer \textcolor{darkpastelgreen}{energy\_storms\_acc.c}.\\\\
+Exposem ara les seccions del codi modificades:
+\begin{lstlisting}[language = GERONA, firstnumber = 180]
+#pragma acc kernels
+{
+    #pragma acc data create(layer_copy[0:layer_size]) 
+    #pragma acc loop
+    for( k=0; k<layer_size; k++ ){
+         layer[k] = 0.0f;
+         layer_copy[k] = 0.0f;
+    }
+}
+\end{lstlisting}
+\newpage
+\begin{lstlisting}[language = GERONA, firstnumber = 212]
+#pragma acc kernels
+{
+    #pragma acc loop    
+    for( k=0; k<layer_size; k++ )
+        layer_copy[k] = layer[k];
+
+    /* 4.2.2. Update layer using the ancillary values.
+              Skip updating the first and last positions */
+    for( k=1; k<layer_size-1; k++ )
+        layer[k] = ( layer_copy[k-1] + layer_copy[k] + layer_copy[k+1] ) / 3;
+
+    /* 4.3. Locate the maximum value in the layer, and its position */
+    float m;
+    int p;
+     #pragma acc loop reduction(max:m)        
+     for( k=1; k<layer_size-1; k++ ) {
+        /* Check it only if it is a local maximum */
+        if ( layer[k] > layer[k-1] && layer[k] > layer[k+1] ) {
+
+            if ( layer[k] > maximum[i] ) {
+                m = layer[k];
+            }
+        }
+    }
+    maximum[i] = m;
+    
+    #pragma acc loop 
+    for (k=1; k<layer_size-1; k++){
+            if(layer[k] == m){
+                    p = k;
+            }
+    }
+    positions[i] = p;
+  }
+}
+\end{lstlisting}
+\newpage
+\section{Resultat}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l||c||c}
+        \multirow{3}{*}{\cellcolor{black}{}} & \multicolumn{2}{c}{\textbf{TEMPS}}\\\hline
+        \cellcolor{black}{} &  SEQÜENCIAL & PARAL·LELITZAT\\ \hline\hline
+        Test 2 & 43.369 & 3.865  \\\hline
+        Test 7 & 241.569 & 21.568 \\\hline
+        Test 8 & 5.260 & 70.749 \\\hline\hline
+        \cellcolor{black}{} & \multicolumn{2}{c}{\textbf{Acceleració}} \\\hline\hline
+        Test 2 & - & 11.22  \\\hline
+        Test 7 & - & 11.20 \\\hline
+        Test 8 & - & 0.07 \\
+    \end{tabular}
+\end{table}
+\hspace{-1.5 em}S'observa com s'ha optimitzat el programa obtenint una millora de fins a $11.22$ vegades més ràpid.\\
+Tot i així s'observa com depenent del cost computacional del programa no obtenim una millora significativa (o fins i tot no obtenim millora, com en el cas del test 8) quan és suficientment baix. \\\\
+Concluim doncs que hem assolit els objectius de paral·lelitzar el programa i recomanem no paral·lelitzar-lo mitjançant \textit{OpenACC} quan el cost del programa no és alt (triga menys de 30 segons aproximadament).
+\newpage
+\section{Principals problemes}
+Enumerem ara els principals problemes que han aparegut en el nostre procés d'optimització del codi:
+\begin{enumerate}
+    \item Optimització del bucle de la linia $180$: \\
+    El problema principal va ser optimitzar l'inicialització dels vector ja que, per exemple, el vector \textit{layer\_copy} no és necessari que es guardi a memòria. Per aquest motiu s'ha utilitzat la clàusula \textit{create}, per a crear el vector en la memòria global dels threats y així evitar copiar-lo de manera inecessària.
+    \item Optimització del bucle de la linia $226$:\\
+    Inicialment es va probar a optimitzar el bucle utilitzant clàusules com \textit{reduction} i \textit{routine seq} però no aconseguiem obtenir la posició màxima ja que intentavem tractar el procés de compilació del \textit{OpenACC} com el de \textit{OpenMP}. Finalment és va recorrir a utilitzar la clàusula \textit{reduction} de manera exclusiva per a trobar el màxim i després crear un bucle for després encarregat de trobar la posició on s'assoleix. Aquesta implementació de dos bucles fors en comptes d'un augmenta la complexitat del programa però gràcies a la paral·lelització amb \textit{OpenACC} i de l'algorisme de reducció que s'aplica amb la clàusula \textit{reduction}.
+\end{enumerate}
+\end{document}

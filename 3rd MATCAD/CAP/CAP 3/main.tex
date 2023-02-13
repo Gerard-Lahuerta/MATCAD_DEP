@@ -1,0 +1,411 @@
+%IMPORTS
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage[catalan]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{ragged2e} 
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[dvipsnames]{xcolor}
+%\usepackage[table]{xcolor}
+\usepackage{float}
+\usepackage{chngcntr}
+\usepackage{ragged2e}
+\usepackage{multirow}
+\usepackage{vmargin}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{listings}
+\usepackage{xcolor,colortbl}
+\usepackage{booktabs}
+%\usepackage{slashbox}
+\definecolor{steelblue}{rgb}{0.27, 0.51, 0.71}
+\definecolor{cinnabar}{rgb}{0.89, 0.26, 0.2}
+\definecolor{bluebell}{rgb}{0.64, 0.64, 0.82}
+\definecolor{atomictangerine}{rgb}{1.0, 0.6, 0.4}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{frenchblue}{rgb}{0.0, 0.45, 0.73}
+\definecolor{darkpastelgreen}{rgb}{0.01, 0.75, 0.24}
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{navy}{rgb}{0,0,128}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{amaranth}{rgb}{0.9, 0.17, 0.31}
+\definecolor{GRAY}{rgb}{0.75, 0.75, 0.75}
+\definecolor{deepfuchsia}{rgb}{0.76, 0.33, 0.76}
+\definecolor{deepmagenta}{rgb}{0.8, 0.0, 0.8}
+\definecolor{funcblue}{rgb}{0.36, 0.57, 0.9}
+\lstdefinestyle{mystyle}
+{language=c,
+    backgroundcolor=\color{white},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{RoyalBlue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    %numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstdefinestyle{Bash}
+{language=bash,
+keywordstyle=\color{blue},
+basicstyle=\ttfamily,
+morekeywords={peter@kbpet},
+morekeywords=[2]{make},
+keywordstyle=[2]{\color{blue}},
+literate={\$}{{\textcolor{blue}{\$}}}1 
+         {:}{{\textcolor{blue}{:}}}1
+         {~}{{\textcolor{blue}{\textasciitilde}}}1,
+}
+\lstdefinestyle{BASH}
+{language=bash,
+keywordstyle=\color{blue},
+basicstyle=\ttfamily,
+morekeywords={peter@kbpet},
+morekeywords=[2]{make},
+fontsize=5pt
+keywordstyle=[2]{\color{blue}},
+literate={\$}{{\textcolor{blue}{\$}}}1 
+         {:}{{\textcolor{blue}{:}}}1
+         {~}{{\textcolor{blue}{\textasciitilde}}}1,
+}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinelanguage{GERONA}{
+    classoffset = 1,
+    morekeywords = {for, if, else},
+    keywordstyle = \color{atomictangerine},
+    classoffset = 2,
+    alsoletter=\#,
+    morekeywords = {\#pragma, omp, parallel, ordered},
+    keywordstyle = \color{bluebell},
+    classoffset = 3,
+    morekeywords = {sizeof},
+    keywordstyle = \color{cinnabar},
+    classoffset = 4,
+    morekeywords = {NULL, MPI_COMM_WORLD, MPI_FLOAT, THRESHOLD, MPI_FLOAT_INT, MPI_MAXLOC, EXIT_FAILURE},
+    keywordstyle = \color{steelblue},
+    classoffset = 0,
+    morekeywords = {int, float, struct},
+    keywordstyle = \color{applegreen},
+    morestring = [b]",
+    morestring = [b]',
+}
+
+\lstdefinestyle{CStyle}{
+    %backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=GERONA
+}
+
+\lstset{style=CStyle}
+
+
+\setpapersize{A4}
+\setmargins{2.5cm}     % margen izquierdo
+{2.6cm}                % margen superior
+{16.5cm}               % anchura del texto
+{23.7cm}               % altura del texto
+{10pt}                 % altura de los encabezados
+{0cm}                  % espacio entre el texto y los encabezados
+{0pt}                  % altura del pie de página
+{1cm}                  % espacio entre el texto y el pie de página
+\renewcommand{\baselinestretch}{1.5}
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    {\bfseries\LARGE \hspace{1.9em} Universitat Autònoma de Barcelona\newline Facultat de Ciències\par}
+    \vspace{2cm}
+    {\hspace{-1em}\includegraphics[width=0.7\textwidth]{MatCAD3.jpg}\par}
+    \vspace{1cm}
+    {\scshape\Huge Pràctica 3\par} 
+    \vspace{1cm}
+    {\Large \itshape Autors: \par}
+    {\Large \hspace{-1.75em} Gerard Lahuerta \& Ona Sánchez \par}
+    {\Large 1601350 --- 1601181 \par}
+    \vspace{1cm}
+    {\Large 6 de Gener del 2023\par}
+\end{titlepage}
+
+\justifying
+
+\newpage
+\section{Introducció}
+L'objectiu d'aquesta pràctica és optimitzar el temps d'execució del programa \textcolor{frenchblue}{energystorm}, programat al fitxer \textcolor{darkpastelgreen}{energy\_storms.c}. \\
+Per tal d'optimitzar el funcionament del programa, es recurrirà a la paralel·lització de totes les instruccions repetitives, sempre i quan sigui possible, que generin un cost computacional elevat, al fitxer \textcolor{darkpastelgreen}{energy\_storms\_mpi.c}. \\
+\section{Anàlisi del problema}
+A l'estudi realitzat anteriorment sobre els temps de diversos bucles del programa \textcolor{darkpastelgreen}{energy\_storms.c}\footnote{L'estudi esmentat és el ja entregat anteriorment, si es vol consultar és: \textcolor{blue}{\href{https://drive.google.com/file/d/1cSu44VuoF-0nm9SR1Bhz5VClLV0hwk4E/view?usp=sharing}{Estudi Pràctica 1 CAP}}}, es va veure que la fase que més tarda en executar-se en la simulació és el bucle iniciat a la linia \textbf{183}, ja que el percentatge de temps que s'hi inverteix és casi del 100\% del total del temps d'execució, pel que els esforços en optimitzar el codi haurien d'anar enfocats a aquest bucle.\\\\
+Per altra banda, també es va concloure que els bucles iniciats a les línies \textbf{198} i \textbf{207} podrien ser paral·lelitzats, pel que s'ha d'estudiar quina és la millor manera d'optimitzar-los.\\\\
+S'observen també bucles diversos que podrien unir-se en un de sol, com és el cas dels fors de les línies \textbf{175} i \textbf{176} (ja que usen el mateix rang de valors per l'índex k i no depenen entre ells).\\\\
+Tot i així, la solució presentada tindrà un plantejament diferent a les presentades mitjançant \textit{OpenMP} i \textit{OpenACC}.
+
+\newpage
+\section{Disseny de la solució}
+Exposem i expliquem ara les seccions del codi modificades:
+\begin{lstlisting}[language = GERONA, firstnumber = 172]
+int rank, nprocs, size;
+MPI_Status status;
+MPI_Init( &argc, &argv );
+MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
+
+size = layer_size/nprocs;
+
+float *layer = (float *)malloc( sizeof(float) * layer_size );
+float *layer_copy = (float *)malloc( sizeof(float) * layer_size );
+float *layer_priv = (float *)malloc( sizeof(float) * size );
+float *layer_copy_priv = (float *)malloc( sizeof(float) * size );
+
+if ( layer == NULL || layer_copy == NULL ) {
+    fprintf(stderr,"Error: Allocating the layer memory\n");
+    exit( EXIT_FAILURE );
+}
+
+if(rank == 0){
+     #pragma omp parallel for
+     for( k=0; k<layer_size; k++ ){ layer[k] = 0.0f; layer_copy[k] = 0.0f; }
+}
+
+MPI_Scatter(layer, size, MPI_FLOAT, layer_priv, size, MPI_FLOAT, 0, MPI_COMM_WORLD);
+MPI_Scatter(layer_copy, size, MPI_FLOAT, layer_copy_priv, size, MPI_FLOAT, 0, 
+             MPI_COMM_WORLD);
+\end{lstlisting}
+\vspace{2em}
+S'inicien els processos paral·lels amb MPI i s'utilitza el mètode \textit{Scatter} per a dividir l'inicialització dels vecctor \textit{layer} i \textit{layer\_copy} duts a terme pel procès amb rank 0 (el master).\\
+A més, s'inicialitcen els vector auxiliars de cada procès amb el tamany que hi necesiten per a poder treballar ($size = \frac{layer\_size}{nprocs}$).\\
+Els vectors que utilitzarà cada procès per a fer els càlculs són: \textit{layer\_priv} i \textit{layer\_copy\_priv}.
+\newpage
+\begin{lstlisting}[language = GERONA, firstnumber = 209]
+for( j=0; j<storms[i].size; j++ ) {
+    float energy = (float)storms[i].posval[j*2+1] * 1000;
+    int position = storms[i].posval[j*2];
+
+    #pragma omp parallel for
+    for( k=0; k<size; k++ ) {
+
+        int distance = abs(position - (rank*size + k)) + 1;
+        float atenuacion = sqrtf( (float)distance );
+
+        float energy_k = energy / (layer_size * atenuacion);
+        float Tls = THRESHOLD / layer_size;
+
+        if ( energy_k >= Tls || energy_k <= -Tls )
+                 layer_priv[k] = layer_priv[k] + energy_k;
+
+    }
+}
+\end{lstlisting}
+\vspace{2em}
+El següent fragment de codi modificat és el càlcul de l'energia de les cel·les.\\
+S'ha eliminat la funció \textit{update} i s'ha inserit directament el codi en el bucle for.\\
+A més, els càlculs ara es fan sobre el vector propi de cada procès.
+\newpage
+\begin{lstlisting}[language = GERONA, firstnumber = 235]
+#pragma omp parallel for
+for( k=0; k<size; k++ ) layer_copy_priv[k] = layer_priv[k];
+float inferior, superior;
+
+if(rank != nprocs-1){
+    MPI_Send(&layer_priv[size-1], 1, MPI_FLOAT, rank + 1, rank, MPI_COMM_WORLD);
+    MPI_Recv(&superior,1,MPI_FLOAT, rank+1, rank+1+nprocs, MPI_COMM_WORLD, &status);
+}
+if(rank != 0){
+    MPI_Send(&layer_priv[0], 1, MPI_FLOAT, rank - 1, rank + nprocs, MPI_COMM_WORLD);
+    MPI_Recv(&inferior, 1, MPI_FLOAT, rank - 1, rank - 1, MPI_COMM_WORLD, &status);
+}
+
+\end{lstlisting}
+\vspace{2em}
+Expliquem ara l'enviament d'informació entre processos:
+\begin{itemize}
+    \item Primer if: $rank != nprocs-1$\\
+        Tots els processos que no siguin l'últim envien l'últim element del seu propi vector \textit{layer\_priv} al següent procès; és a dir, el procès de rank 1 envia l'últim element al procès de rank 2 i així successivament.
+    \item Segon if: $rank != 0$\\
+        Tots els processos que no siguin el primer envien el primer element del seu propi vector \textit{layer\_priv} al procès anterior; és a dir, el procès de rank 1 envia el primer element al procès de rank 0 i així successivament.
+\end{itemize}
+Aquesta informació enviada es guarda a les variables \textit{superior} i \textit{inferior} (si és l'últim element que s'envia o el primer que s'envia respectivament) i s'utilitzarà per a calcular l'energia de les celdes.
+\newpage 
+\begin{lstlisting}[language = GERONA, firstnumber = 252]
+if(rank == 0){
+    #pragma omp parallel for
+    for ( k=1; k<size; k++ ) {
+        if (k != size-1) layer_priv[k] = 
+            (layer_copy_priv[k-1]+layer_copy_priv[k]+layer_copy_priv[k+1])/3;
+        else layer_priv[k] = (layer_copy_priv[k-1]+layer_copy_priv[k]+superior)/3;
+    }
+}
+else if(rank == nprocs -1){
+    #pragma omp parallel for
+    for( k=0; k<size-1; k++ ) {
+        if(k != 0) layer_priv[k] = 
+            (layer_copy_priv[k-1]+layer_copy_priv[k]+layer_copy_priv[k+1])/3;
+        else layer_priv[k] = (inferior+layer_copy_priv[k]+layer_copy_priv[k+1])/3;
+    }
+}
+else {
+    #pragma omp parallel for
+    for( k=0; k<size; k++ ){
+        if(k == 0) layer_priv[k] = 
+            (inferior+layer_copy_priv[k]+layer_copy_priv[k+1])/3;
+        else if(k == size - 1) layer_priv[k] = 
+            (layer_copy_priv[k-1]+layer_copy_priv[k]+superior)/3;
+        else layer_priv[k] = 
+            (layer_copy_priv[k-1]+layer_copy_priv[k]+layer_copy_priv[k+1])/3;
+    }
+}
+\end{lstlisting}
+\vspace{2em}
+Es calcula l'energia de cada celda mitjançant la informació enviada entre els processos, distingint els casos de l'últim i el primer procès, ja que el procès de càlcul és diferent als que es troben entremig.
+\newpage 
+\begin{lstlisting}[language = GERONA, firstnumber = 275]
+struct tupla {
+    float maxi_layer;
+    int posicio_layer;
+};
+
+struct tupla *aux = malloc(size * sizeof *aux);
+struct tupla *maxi = malloc(size * sizeof *maxi);
+
+#pragma omp parallel for
+for(k = 0; k < size; k++){ aux[k].maxi_layer = layer_priv[k]; 
+                           aux[k].posicio_layer = rank*(size) + k;}
+
+MPI_Reduce(aux, maxi, size, MPI_FLOAT_INT, MPI_MAXLOC, 0, MPI_COMM_WORLD);
+maximum[i] = maxi[0].maxi_layer;
+
+if(rank == 0){
+    for(j=1; j<size; j++){
+        if(maxi[j].maxi_layer > maximum[i]){
+                maximum[i] = maxi[j].maxi_layer;
+                positions[i] = maxi[j].posicio_layer;
+        }
+    }
+}
+\end{lstlisting}
+Es crea una estructura que hi guardi la prosicció (real) de la celda i el valor de l'energia de cada vector dels diversos processos.\\
+Mitjançant el mètode \textit{Reduce} agrupem el valor màxim i la seva posició de cada procès en el procès amb rank 0 que s'encarregarà de trobar el màxim etre ells i guardar el seu valor i la seva posició a les variables \textit{maximum} i \textit{position}.
+\\\\
+S'ha simplificat la paral·lelització de la millor manera possible per tal d'optimitzar al màxim el codi.
+Informar que les comandes d'OpenMP que es veuen en el codi son degudes a un estudi posterior on s'ha intentat millorar l'optimització implementant a la vegada OpenMP.\\\\
+L'anàlisis d'aquest estudi és explicats posteriorment.\\\\
+En cas de voler consultar les zones modificades, en les seccions de codi hi ha indicades les files on es troben les comandes al fitxer \textcolor{darkpastelgreen}{energy\_storm\_mpi.c}.
+\section{Resultat}\label{TaulaResultats}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l||c||c|c|c}
+        \multirow{3}{*}{\cellcolor{black}{}} & \multicolumn{4}{c}{\textbf{TEMPS}}\\\hline
+        \cellcolor{black}{} & \multirow{2}{*}{SEQÜENCIAL} & \multicolumn{3}{c}{PARAL·LELITZAT}\\ 
+        \cellcolor{black}{} &  & 2 processadors & 4 processadors & 6 processadors \\\hline\hline
+        Test 2 & 43.369 & 46.931 & 24.323 & 16.245 \\\hline
+        Test 7 & 241.569 & 262.889 & 132.782 & 89.083 \\\hline
+        Test 8 & 5.260 & 12.337 & 8.516 & 7.246 \\\hline\hline
+        \cellcolor{black}{} & \multicolumn{4}{c}{\textbf{Acceleració}} \\\hline\hline
+        Test 2 & - & 0.924 & 1.783 & 2.669 \\\hline
+        Test 7 & - & 0.918 & 1.819 & 2.711 \\\hline
+        Test 8 & - & 0.426 & 0.617 & 0.725 \\
+    \end{tabular}
+\end{table}
+\hspace{-1.5 em}\\S'observa com s'ha optimitzat el programa obtenint una millora de fins a 2.711 vegades més ràpid amb 6 processos en el test 7.\\
+Concluïm que hem assolit els objectius millorant les zones que ja s'havien estudiat anteriorment, en els casos dels tests 2 i 7, mentre que el test 8 no s'ha aconseguit reduir el temps de còmput.\\
+Destacar que en el cas d'usar únicament 2 processadors per distribuïr la feina no s'aconsegueix accelerar l'execució degut a que l'alt cost de comunicació entre processos no es veu compensat per la distribució del treball, cosa que si que es veu compensada en el cas d'usar més processadors.
+\newpage
+
+\section{OpenMP}
+S'ha estudiat també la millora del temps de còmput en el cas d'afegir comandes d'OpenMP a certs bucles del programa \textcolor{darkpastelgreen}{energy\_storms\_mpi.c}, optimitzat anteriorment usant MPI. Els resultats es mostren a continuació:
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l||c||c|c|c}
+        \multirow{3}{*}{\cellcolor{black}{}} & \multicolumn{4}{c}{\textbf{TEMPS}}\\\hline
+        \cellcolor{black}{} & \multirow{2}{*}{SEQÜENCIAL} & \multicolumn{3}{c}{PARAL·LELITZAT}\\ 
+        \cellcolor{black}{} &  & 2 processadors & 4 processadors & 6 processadors \\\hline\hline
+        Test 2 & 43.369 & 45.694 & 23.553 & 15.379 \\\hline
+        Test 7 & 241.569 & 267.853 & 131.307 & 87.903 \\\hline
+        Test 8 & 5.260 & 12.313 & 8.733 & 7.269 \\\hline\hline
+        \cellcolor{black}{} & \multicolumn{4}{c}{\textbf{Acceleració}} \\\hline\hline
+        Test 2 & - & 0.949 & 1.841 & 2.820 \\\hline
+        Test 7 & - & 0.901 & 1.839 & 2.748 \\\hline
+        Test 8 & - & 0.427 & 0.602 & 0.723 \\
+    \end{tabular}
+\end{table}
+\hspace{-1.5 em}\\S'observa com s'ha optimitzat el programa obtenint una millora de fins a 2.820 vegades més ràpid amb 6 processos en el test 2.\\
+Es dedueix també que l'ús d'OpenMP disminueix el temps d'execució del programa en la gran majoria dels casos, tot i que la millora resulta ser poc significativa, sent la major millora de 0.866 segons.\\
+Concluïm, d'igual manera que anteriorment a \textcolor{blue}{\ref{TaulaResultats}}, que hem assolit els objectius millorant les zones que ja s'havien estudiat anteriorment, en els casos dels tests 2 i 7, mentre que el test 8 no s'ha aconseguit reduir el temps de còmput, i que els casos on no s'ha aconseguit una millora dels temps és degut a l'alt cost de la comunicació entre processos.\\
+\newpage
+\section{Comparativa de mètodes}
+Es mostren a continuació els millors temps i acceleracions aconseguides per cada test, amb el seu mètode corresponent. Si es desitja examinar les dades sobre els mètodes OpenMP i OpenACC, es poden consultar als estudis entregats anteriorment a:  \textcolor{blue}{\href{https://drive.google.com/file/d/1OXRT-CTcpvjThIazEL3i0cUAJ4ARFBfX/view?usp=sharing}{Pràctica 1 CAP}} i \textcolor{blue}{\href{https://drive.google.com/file/d/1T_Oz_24wRpNrA5BrgScWadKkagXSkpYF/view?usp=sharing}{Pràctica 2 CAP}}. \\
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l||c||c|c|c}
+        \multirow{2}{*}{\cellcolor{black}{}} & \textbf{Temps} & \textbf{Millor temps} & \textbf{Acceleració} & \textbf{Mètode}\\\hline
+        \cellcolor{black}{} & \multirow{1}{*}{SEQÜENCIAL} & \multicolumn{3}{c}{PARAL·LELITZAT}\\\hline\hline
+        Test 2 & 43.369 & 3.865 & 11.220 & OpenACC \\\hline
+        Test 7 & 241.569 & 20.755 & 11.639 & OpenMP (12 fluxos) \\\hline
+        Test 8 & 5.260 & 1.275 & 4.125 & OpenMP (12 fluxos)\\
+    \end{tabular}
+\end{table}\\
+\hspace{-1.5 em} Es dedueix de la taula anterior que el mètode que aconsegueix una millor acceleració és la nostra implementació mitjançant l'OpenMP que, com més fluxos utilitzi, més permet reduir el temps de còmput, aconseguint una acceleració més alta, de manera que els millors temps trobats han sigut usant el màxim nombre de fluxos estudiats, 12.\\\\
+S'observa que l'únic test pel que la millor opció no és usar OpenMP és el test 2, que aconseguia una acceleració màxima de 10.340, davant 11.220 assolit amb la implementació proposada mitjançant OpenACC.
+\newpage 
+\hspace{-1.5em}Es mostra a continuació els càlculs d'eficiència de cada mètode:\\
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l||c|c|c|c|c|c|c|c}
+        \cellcolor{black}{} & \multicolumn{8}{c}{EFICIENCIA} \\\hline
+        \cellcolor{black}{} & \multicolumn{4}{c|}{OpenMP} & \multirow{2}{*}{OpenACC} & \multicolumn{3}{c}{MPI}\\
+        \cellcolor{black}{} & 2 fluxos & 4 fluxos & 6 fluxos & 12 fluxos &  & 2 proc. & 4 proc. & 6 proc. \\\hline\hline
+        Test 2 & 0.981 & 0.970 & 1.231 & 0.861 & 0.087 & 0.474 & 0.460 & 0.470 \\\hline
+        Test 7 & 0.986 & 0.983 & 1.300 & 0.969 & 0.087 & 0.450 & 0.459 & 0.458 \\\hline
+        Test 8 & 0.842 & 0.645 & 0.624 & 0.343 & 0.001 & 0.213 & 0.150 & 0.120 \\
+    \end{tabular}
+\end{table}\\
+S'observa com la implementació més eficient és la que utilitza \textit{OpenMP}, tot i no ser la que millor acceleració obté en tots els tests. Per aquest motiu, es conclou i es recomana utilitzar la implementació que utilitza \textit{OpenMP}.\\\\
+Per altra banda, si es vol obtenir una bona acceleració ignorant l'eficiència del programa, es recomana utilitzar l'implementació amb \textit{OpenACC} ja que obté resultats similars o millors que la optimització que implementa \textit{OpenMP}.\\\\
+Per altra banda, si l'estudi conté grans quantitats de dades; tot i no haver obtingut molts bons resultats amb els tests, es recomana utilitzar l'optimització amb \textit{MPI} ja que el cost de repartiment i  enviament de dades pot ser rentable i, amb la modificació que inclou a més \textit{OpenMP} pot obtenir molts bons resultats. Tot i així aquesta conclusió és purament intuitiva ja que no s'ha testejat, s'extreu dels resultats obtinguts en les taules.
+\newpage
+\section{Principals problemes}
+Enumerem ara els principals problemes que han aparegut en el nostre procès d'optimitzacdió del codi:
+\begin{enumerate}
+    \item Optimització del bucle de la linia $252$: \\
+    Vam tenir bastants problemes al plantejar la paral·lelització dels càlculs de cada procès ja que no trobavem la forma correcta de distribuïr les dades; tot i així, una vegada provades varies idees (utilitzar \textit{Scatter}, enviar més dades, etc), es va decidir simplificar el mètode enviant només els elements que es necesiten per a calcular l'energia de les celdes que no es trobaben als altres processos.
+    \item Optimització del bucle de la linia $275$:\\
+    El problema principal era com enviar les dades necessaries, primerament es va plantejar de fer la cerca de forma manual però el procès era molt ineficient; pel que cercant en els apunts, a internet i comentant estrategies/ideees dels companys es va probar a fer una estructura i utilitzar el mètode \textit{Reduce} per a enviar la informació al node principal, on s'acabaria de fer la cerca.
+\end{enumerate}
+\end{document}
