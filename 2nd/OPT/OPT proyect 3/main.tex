@@ -1,0 +1,92 @@
+% Nom Cognom
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc} %alternativa: [latin1]
+\usepackage[T1]{fontenc}
+\usepackage[catalan]{babel} %alternativa: altres idiomes
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{ragged2e} 
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage[usenames]{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{float}
+\usepackage{chngcntr}
+\usepackage{ragged2e}
+\usepackage{multirow}
+\usepackage{vmargin}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+
+\setpapersize{A4}
+\setmargins{2.5cm}     % margen izquierdo
+{2.6cm}                % margen superior
+{16.5cm}               % anchura del texto
+{23.7cm}               % altura del texto
+{10pt}                 % altura de los encabezados
+{0cm}                  % espacio entre el texto y los encabezados
+{0pt}                  % altura del pie de página
+{1cm}                  % espacio entre el texto y el pie de página
+\renewcommand{\baselinestretch}{1.5}
+
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    {\bfseries\LARGE Universitat Autònoma de Barcelona \par Facultat de Ciències\par}
+    \vspace{2cm}
+    \vspace{1cm}
+    {\scshape\Huge Lliurament Pràctica 3 d'Optimització \par} 
+    \vspace{1cm}
+    {\Large \itshape Autor: \par}
+    {\large Gerard Lahuerta 1601350\par}
+    \vspace{1cm}
+    {\Large 25 de Març del 2022\par}
+\end{titlepage}
+
+\justifying
+\newpage
+\section{Comparativa del Mètodes}
+En aquesta pràctica hem hagut de programar 5 diferents tipus de mètodes d'Optimització lineal que s'inclouen a la libreria \textit{GSL}. \\
+Aquest mètodes han sigut Nelder-Mead, Steepest descent, BFGS, Fletcher-Reeves i Polak-Ribiere.\\
+Hem estudiat el seu comportament amb un programa en llenguatge \texttt{C} que té com a objectiu trobar el mínim de la funció $f(x): \mathbb{R}^n \longrightarrow \mathbb{R}$ amb $n=10$, punt inicial $x_0=(1,1,1,1,1,1,1,1,1,1)$ i
+\begin{equation*}
+    f(x) = \sum_{i=2}^{n}\left[(1+p)\cdot (x_{i-1}-3)^2 + (x_{i-1}-x_i)^2 + e^{20(x_{i-1}-x_i)}\right] \text{  on $p=1,1$.}
+\end{equation*}
+Els resultats obtinguts han sigut els següents:
+\begin{center}
+  \begin{tabular}{ c | c | c }
+    \textbf{Mètode} & \textbf{Iteracions} & \textbf{Convergencia} \\ \hline
+     Nelder-Mead & 2350 & (2.61, 2.73, 2.83, 2.91, 2.99, 3.08, 3.16, 3.26, 3.38, 3.58) \\ \hline
+     Steepest descent &  8 & (1.00, 1.00, 1.11, 1.17, 1.15, 1.21, 1.21, 1.24, 1.27, 1.29) \\ \hline
+     BFGS & 28 & (2.47, 2.58, 2.62, 2.76, 2.95, 3.42, 3.60, 3.69, 3.88, 5.09)  \\ \hline
+     Fletcher-Reeves & 46 & (2.94, 3.01, 3.05, 3.11, 3.14, 3.42, 3.52, 3.63, 3.79, 5.21) \\ \hline
+     Polak-Ribiere & 28 & (2.47, 2.58, 2.62, 2.76, 2.95, 3.42, 3.60, 3.69, 3.88, 5.09) \\ \hline
+  \end{tabular}
+\end{center}
+
+\section{Anàlisis del resultats i Conclusions}
+Observem que el punt de convergencia entre els mètodes no coincideix pel que experimentem una altre vegada pero cambiant el punt incial per $x_0 = (2.47, 2.58, 2.62, 2.76, 2.95, 3.42, 3.60, 3.69, 3.88, 5.09)$ per comprovar si el mètode funciona correctament i el que succeeix es que els mètodes tendeixen a mínims locals diferents degut a les diferéncies entre els algoritmes.
+\begin{center}
+  \begin{tabular}{ c | c | c }
+    \textbf{Mètode} & \textbf{Iteracions} & \textbf{Convergencia} \\ \hline
+     Nelder-Mead & 616 & (2.62, 2.73, 2.83, 2.91, 2.99, 3.08, 3.16, 3.26, 3.38, 3.57) \\ \hline
+     Steepest descent & 6 & (2.80, 2.93, 3.06, 3.13, 3.25, 3.30, 3.42, 3.57, 3.78, 5.08) \\ \hline
+     BFGS & 30 & (2.34, 2.65, 2.76, 2.85, 2.94, 2.99, 3.11, 3.24, 3.44, 3.95) \\ \hline
+     Fletcher-Reeves & 56 & (2.63, 2.74, 2.83, 2.91, 3.00, 3.07, 3.16, 3.26, 3.37, 3.63) \\ \hline
+     Polak-Ribiere & 28 & (2.47, 2.58, 2.62, 2.76, 2.95, 3.42, 3.60, 3.69, 3.88, 5.09) \\ \hline
+  \end{tabular}
+\end{center}
+Demostrem per tant la nostra hipòtesis i que les diferències son degudes a les variacions de la propia funció i els diversos mínims locals que té.\\
+Per altra banda ens percatem de les diferencies en la quantitat d'iteracions necesaries per a trobar un mínim; de millor a pitjor és: \textit{Steepest Descend}, \textit{Polak-Ribiere}, \textit{BFGS}, \textit{Fletcher-Reeves} i eventualment \textit{Nelder-Mead}.
+\newpage
+\textcolor{white}{q}
+\end{document}

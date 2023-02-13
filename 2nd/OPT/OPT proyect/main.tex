@@ -1,0 +1,493 @@
+%IMPORTS
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage[catalan]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{ragged2e} 
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[dvipsnames]{xcolor}
+%\usepackage[table]{xcolor}
+\usepackage{float}
+\usepackage{chngcntr}
+\usepackage{ragged2e}
+\usepackage{multirow}
+\usepackage{vmargin}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{listings}
+\usepackage{xcolor,colortbl}
+\usepackage{enumitem}
+% \usepackage[english, spanish]{babel}
+% \usepackage{slashbox}
+\usepackage{diagbox}
+\usepackage{eurosym}
+\usepackage{relsize}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    {\bfseries\LARGE Universitat Autònoma de Barcelona\newline Facultat de Ciències\par}
+    \vspace{2cm}
+    {\hspace{-1em}\includegraphics[width=0.4\textwidth]{logo.png}\par}
+    \vspace{1cm}
+    {\scshape\Huge Pràctica 1\par} 
+    \vspace{1cm}
+    {\Large \itshape Autors: \par}
+    {\Large  Gerard Lahuerta \par}
+    {\Large 1601350 \par}
+    \vspace{1cm}
+    {\Large 8 maig 2022\par}
+\end{titlepage}
+
+\justifying
+
+\newpage
+\setcounter{page}{2}
+\pagestyle{plain}
+\tableofcontents
+\cleardoublepage
+\addcontentsline{}{chapter}{}
+\newpage
+\section{Exercici 1}
+\subsection{Enunciat}
+“Anxoves l’Escala” produeix llaunes d’anxoves i de sardines. Es planifica la producció mensualment.\\
+La fàbrica té dues màquines d’enllaunar que proporcionen 300 hores de funcionament. L’empresa fa tests de qualitat electrònics a totes les seves llaunes. El proper mes hi ha disponibles
+640 hores de test electrònic.\\
+L’empresa té problemes de tesoreria i ha de limitar per al proper mes el pressupost de compra
+de peix a 56000\euro\hspace{0.0625em} i de compra de llauna a 140000\euro.\\
+La taula següent recull informació sobre la fabricació (envasat en unitats per hora, test en
+unitats per hora, preu del peix per unitat, preu material llauna per unitat, i benefici net per
+unitat). La unitat és una llauna.\\
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ c | c  c  c  c  c }
+                 & envasat (un./h.) & test (un./h.) & preu peix & preu llauna & benefici \\ \hline
+        anxoves  & 1600 & 800 & 0.30 & 0.11 & 0.26 \\
+        sardines & 2000 & 800 & 0.20 & 0.08 & 0.20 \\
+    \end{tabular}
+\end{table}
+\begin{enumerate}[label=(\alph*)]
+    \item Quin hauria de ser el pla de fabricació del proper mes? Quin seria el benefici?
+    \item L’empresa també vol saber:
+    \begin{enumerate}
+        \item[b.1] Donaria beneicis incrementar el temps de control? Quins?
+        \item[b.2] Què passa si incrementem el pressupost de material de llauna?
+        \item[b.3] Què passa si incrementem el pressupost de peix?
+        \item[b.4] Es pot augmentar el temps de les màquines d’enllaunat a un cost de 100 eper hora. Seria recomanable fer aquest augment?
+        \item[b.5] Seria recomanable augmentar el temps de test a un cost de 100 eper hora? 
+    \end{enumerate}
+    \item Si ajuntem els pressupostos de compra de material de la llauna i de peix podríem tenir
+més benefici?
+\end{enumerate}
+\newpage
+\subsection{Resolució del exercici}
+\subsubsection{Apartat a)}
+Sigui la funció de beneficis a maximitzar $B$, mitjançant l'enunciat, podem definir-la com:
+$$B = \text{benefici\_peix} + \text{benefici\_anxoves}$$
+Definim ara els components de la funció:
+\begin{itemize}
+    \item \textbf{benefici\_anxoves:}\\
+    L'empresa obté un benefici net de la venta de llaunes d'anxoves ($B_A$) de $0.26$\euro.\\
+    Anomenem a la quantitat de llaunes anxoves que fabriquem com $Q_A$.\\
+    Podem deduir doncs l'expressió del benefici que obté la venta d'anxoves:
+    $$benefici\_anxoves = B_A \cdot Q_A = 0.26 \cdot Q_A$$
+    
+    \item \textbf{benefici\_sardines:}\\
+    L'empresa obté un benefici net de la venta de llaunes de sardines ($B_S$) de $0.2$\euro.\\
+    Anomenem a la quantitat de llaunes de sardines que fabriquem com $Q_S$.\\
+    Podem defuïr doncs l'expressió del benefici que obté la venta de sardines:
+    $$benefici\_sardines = B_S \cdot Q_S = 0.2 \cdot Q_S$$
+\end{itemize}
+Per tant, la nostra funció de benefici $B(Q_i)$, per a $i\in\{A,S\}$, a maximitzar és:
+\begin{center}
+\fcolorbox{black}{white}{$B(Q_A,Q_S) = 0.26 \cdot Q_A + 0.2 \cdot Q_S$}
+\end{center}
+Trobem ara les restriccions:
+\begin{itemize}
+    \item [$ $] \textbf{Restriccions sobre la compra d'anxoves i sardines:}\\
+    Tenim un pressupost màxim per a la compra dels dos tipus de productes (Anxoves ($A$) i Sardines ($S$)).\\
+    La compra del prodcute és necesaria per a obtenir beneficis.\\
+    De manera que la restricció sobre la compra del peix és:
+    $$ 0 < P_{AS} = P_A \cdot Q_A + P_S \cdot Q_S \leq P_{max} $$
+    On $P_I$ és el preu del producte $I$, tal que $I\in\{A,S\}$, i $P_{max}$ és el pressupost màxim en la compra dels dos tipis de peix.    
+    \item [$ $] \textbf{Restriccions sobre la compra de llaunes:}\\
+    Tenim un pressupost màxim per a la compra dels dos tipus de llaunes.\\
+    La compra de les llaunes és necesaria per al enllaunament del produte.\\
+    De manera que la restricció sobre les llaunes comprades és:
+    $$ 0 < PL_{AS} = PL_A \cdot Q_A + PL_S \cdot Q_S \leq PL_{max} $$
+    On $PL_I$ és el preu de les llaunes del producte $I$, tal que $I\in\{A,S\}$, i $PL_{max}$ és el pressupost màxim en les llaunes que disposem.    
+    \item [$ $] \textbf{Restriccions sobre l'ús de les màquines d'enllaunament:}\\
+    L'empresa disposa de dues màquines encarregades d'enllaunar les sardines i les anxoves.\\
+    Cada màquina pot treballar en paral·lel, pel que cada una de les màquines ahura de fer la mitad del treball.\\
+    Podem deduïr que el nombre d'unitat de llaunes de peix (en total) estarà acotada per el el temps que es triga en produir-les de manerà que:
+    $$0 < \frac{TE_{AS}}{2} = \frac{E_A^{-1}\cdot Q_A + E_S^{-1}\cdot Q_S}{2} \leq TE_{max}$$
+    O el que és equivalent:
+    $$0 < \frac{Q_A}{E_A}  + \frac{Q_S}{E_S} \leq 2\cdot TE_{max}$$
+    On $E_I$ és el nombre d'unitats que s'enllaunen en una hora del producte $I$, tal que $I\in\{A,S\}$, i $TE_{max}$ és el temps màxim que pot treballar una  de les màquines d'enllaunament.
+    \item [$ $] \textbf{Restriccions sobre l'ús de la màquina de test de qualitat:}
+    La restricció de la màquina de test de qualitat de les llaunes és analoga a la de les màquines d'enllaunament.\\
+    La diferencia és que només disposem d'una sola màquina per a fer els tests.\\
+    Deduïm que la restricció serà:
+    $$0 < T_{AS} = \frac{Q_A}{T_A} + \frac{Q_S}{T_S} \leq TT_{max}$$
+    On $T_I$ és el nombre d'unitats que és testegen en una hora del producte $I$, tal que $I\in\{A,S\}$, i $TT_{max}$ és el temps màxim que pot treballar la màquina de testeig.
+\end{itemize}
+Finalment podem expressar les restriccions (substituïnt pels paràmetres coneguts):
+\begin{enumerate}
+    \item $ 0 \leq Q_S, Q_A $
+    \item $ 0 < 0.3 \cdot Q_A + 0.2 \cdot Q_S \leq 56000 $
+    \item $ 0 < 0.11 \cdot Q_A + 0.08 \cdot Q_S \leq 140000 $
+    \item $0 < \frac{Q_A}{1600}  + \frac{Q_S}{2000} \leq 600$
+    \item $0 < \frac{Q_A + Q_S}{800}  \leq 640 $
+\end{enumerate}
+
+\newpage
+\hspace{-1.5em}Una vegada ja hem plantejat el problema el resolem mitjançant el programa $ glpk$.\\
+El resultat obtingut per part del programa és:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c}
+        \textbf{Producte} & \textbf{Unitats ha comprar} \\ \hline
+        Anxoves & $0$\\ \hline
+        Sardines & $280000$\\ 
+    \end{tabular}
+\end{table}\\
+És a dir, que per a obtenir el màxim benefici possible cal només produir Sardines; més concretament cal produir $280000$ llaunes de Sardines.\\
+Aquest pla de fabricacció permet obtenir el màxim benefici per valor de $56000$\euro.
+\subsubsection{Apartat b)}
+Per a resoldre tots el subapartats de l'apartat \textit{(b)}, mostrem ara una part de l'informació obtinguda mitjançant la comanda \texttt{-o} del $glpk$.\\
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ c | c | c | c | c | c | c }
+        No. & Row name & St & Activity & Lower bound & Upper bound & Marginal \\\hline\hline
+        1 & benefici & B & $56000$ & & &  \\ \hline 
+        2 & pressupost & NU & $56000$ & & $56000$ & $1$ \\\hline
+        3 & pressupost\_llaunes & B & $22400$ & & $140000$ & \\\hline
+        4 & temps\_enllaunament & B & $140$ & & $600$ & \\\hline
+        5 & temps\_test & B & $350$ & & $640$ & \\
+    \end{tabular}
+    \caption{Taula extreta amb la comanda \texttt{-o} del $glpk$}
+    \label{tab:my_label}
+\end{table}
+\begin{enumerate}
+    \item \textbf{Donaria beneficis incrementar el temps de control? Quin?}\\
+    Observem que de les $640$ hores màximes que pot treballar la màquina encarregar de fer el testeig, aquesta només treballa $350$.\\
+    Per tant, incrementar les hores que pot fer tests la màquina no influiria en obtenir major benefici.\\
+    \textit{El temps de treball de la màquina de testeig  és una restricció inactiva.}\\
+    Aquesta informació l'hem obtinguda de la fila numero 4, ja que la variable \textit{temps\_test} és la que recull el nombré d'hores que s'utilitza la màquina de testeig per a obtenir el màxim benefici.
+    \item \textbf{Què passa si incrementem el pressupost de material de llauna?}
+    De la mateixa manera que amb la pregunta anterior, amb l'informació de la taula (més concretament la de la fila número 3, la fila dedicada a la variable pressupost\_llaunes), no utilitcem la totalitat del pressupost.\\
+    Per tant, incrementar el pressupost no afectaria en obtenir més beneficis.\\
+    \textit{El pressupost destinat a les llaunes és una restricció inactiva.}
+    \item \textbf{Què passa si incrementem el pressupost de peix?}\\
+    Mitjançant l'informació de la fila de pressupost (fila numero 1 corresponent al pressupost per a la compra de peix) deduïm que, exectivament, si l'augmentem el benefici seria major. Aixó es degut a que si utilitcem la totalitat del pressupost i, a més, el seu marginal és $1$; és a dir, que si augmentem en 1 unitat el pressupost obtindrem 1 unitat més de benefici (en aquest cas 1 unitat es 1\euro). \\
+    \textit{El pressupost destinat a la compra de peix és una restricció activa.}
+    \item \textbf{Es pot augmentar el temps de les màquines d’enllaunat a un cost de 100\euro \hspace{0.0625}per hora. Seria recomanable fer aquest augment?}\\
+    Analogament amb la màquina de testeig de les llaunes, les hores màximes de treball de les màquines d'enllaunament ($300$ hores per $2$ màquines; és a dir, $600$ hores en total) no són utilitzades en la seva totalitat, només son utilitzades $150$.\\
+    Per tant, incrementar el seu servei d'hores (independentment del cost que precissi l'augment) és innecessari per a incrementar els beneficis.\\
+    \textit{El temps de treball de la màquina d'enllaunament és una restricció inactiva.}\\
+    La informació per a la conclusió s'ha extret de la fila 3, dedicada a la variable temps\_enllaunament.
+    \item \textbf{Seria recomanable augmentar el temps de test a un cost de 100\euro \hspace{0.0625} per hora?}\\
+    Tal com hem explicat a l'apartat \textit{(b.1)}, el temps de testeig no influeix en els beneficis.\\
+    Per tant, no seria recomanable augmentar el temps de testeg per $100$\euro per hora
+\end{enumerate}
+\subsubsection{Apartat c)}
+Mitjançant les observacions fetes a l'apartat anterior i la informació que hi conté la taula, podem afirmar que si ajuntem els pressupostos de les llaunes amb els dels peixos tindrem més benefici.\\
+Aixó esdevé a que no s'utilitza la totalitat del pressupost destinat a les llaunes, pel que part d'aquest pressupost no utilitzat pot ser aprofitat en augmentar el nombre de peixos a comprar per, així, fabricar més llaunes.\\
+Com que el marginal del pressupost de peix és positiu, ens indica que si augmentem el pressupost el benefici ha de creixer també (en principi).
+Per asegurar executem el nostre programa $glpk$ per a confirmar l'hipotesis.\\
+Inserim aquí els resultats obtinguts:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c}
+        \textbf{Producte} & \textbf{Unitats ha comprar} \\ \hline
+        Anxoves & $404923$\\ \hline
+        Sardines & $107077$\\ 
+    \end{tabular}
+\end{table}\\
+És a dir, si subtituïm en la formula obtinguda a l'apartat \textit{(a)} per als beneficis, trobem que el benefici serà d'uns $126695.38$ \euro. 
+
+
+
+
+
+
+
+\newpage
+\section{Exercici 2}
+\subsection{Enunciat}
+Dues ciutats generen residus i els seus residus s’envien a incineradores per a la seva combustió.\\
+La producció diària de residus i les distàncies entre les ciutats i les incineradores són:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ c | c | c  c }
+         & residus produïts  & \multicolumn{2}{ c }{dist. a l’incineradora}  \\ 
+         & (tones/dia) & A (en km) & B (en km) \\ \hline
+        ciutat 1 & 500 & 30 & 20 \\
+        ciutat 2 & 400 & 36 & 42 
+    \end{tabular}
+\end{table}\\
+La incineració redueix cada tona de residus a 0.2 tones de deixalles, que s’han d’abocar en un
+dels dos abocadors (Nord i Sud). Costa 3\euro\hspace{0.0625em} per km transportar una tona de material (ja siguin
+residus o cendres). A continuació es mostren les distàncies (en km) entre les incineradores i
+els abocadors:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ c | c | c | c  c }
+         & capacitat  & cost incineració & \multicolumn{2}{ c }{dist. als abocadors}  \\
+         & (tones/dia) & euros/tona & Nord (en km) & Sud (en km) \\ \hline
+         incineradora A & 500 & 40 & 5 & 8 \\
+         incineradora B & 600 & 30 & 9 & 6 
+    \end{tabular}
+\end{table}
+\begin{enumerate}[label=(\alph*)]
+    \item Planteja un problema de programació lineal que proporcioni el pla per tal de minimitzar
+el cost total de l’eliminació dels residus de les dues ciutats.
+
+    \item Resol el problema en glpk. Digues quin és exactament el pla de transport i quin és el
+cost total.
+    \item Suposem que el transport entre les ciutats i les incineradores està limitat a 300 tones per
+ruta.
+\begin{enumerate}
+        \item[c.1] Com hauríem d’organitzar el transport?
+        \item[c.2] Observant el fitxer de solució que es genera amb glpk (opció -o), de quina ruta
+valdria la pena ampliar-ne la capacitat? quin seria el decreixement del cost per
+cada tona que s’ampliés?
+        \item[c.3] Si calculem el cost per a aquesta ampliació de capacitat (només en una ruta), quadra
+amb el que observem al fitxer generat amb l’opció -o? Per què?
+    \end{enumerate}
+    \item Què passaria si poséssim les incineradores a les ciutats? Cal tenir en compte que les
+ciutats estan a una distància de 30 km entre elles i que aleshores les distàncies de les
+incineradores als abocadors serien
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ c | c | c  c }
+         & \multicolumn{2}{ c }{dist. als abocadors}  \\ 
+         & Nord (en km) & Sud (en km) \\ \hline
+        incineradora A & 35 & 38  \\
+        incineradra B & 51 & 48  
+    \end{tabular}
+\end{table}\\
+Calcula quina seria la reducció de cost total de transport.
+\end{enumerate}
+\newpage
+\subsection{Resolució del exercici}
+\subsubsection{Apartat a)}
+Sigui la funció de cost a minimitzar $f(x)$, mitjançant l'enunciat, podem definir-la com:
+$$f =   \text{cost\_transport\_ciutats}  + \text{cost\_incineracio}  +  \text{cost\_transport\_abocadors} $$
+ Definim ara els components de la funció:
+ \begin{itemize}
+     \item \textbf{cost\_transport\_ciutats:}\\
+     Les ciutats només poden accedir a dos incineradors; pel que si $T_{IJ}$ són les toneades desplaçades de la ciutat $I$ a la incineradora $J$ (essent $I\in \{1,2\}$ i $J \in \{A,B\}$), ens queda que:\\
+     $$PT\cdot \left( \mathlarger{\mathlarger{\sum}}_{I\in \{1,2\}} \mathlarger{\mathlarger{\sum}}_{J \in \{A,B\}} T_{IJ} \cdot d_{IJ}\right) $$
+     on $d_{IJ}$ és la distància entre la ciutat $I$ i la incineradora $J$ i $PT$ és el preu de transport per $km$ i per tonelada.\\
+     Mitjançant l'informació de l'enunciat, substituïm els valors:
+     $$cost\_transport\_ciutats = 3\cdot( 30\cdot T_{1A} + 20\cdot T_{1B} + 36\cdot T_{2A} + 42\cdot T_{2B})$$
+     \item \textbf{cost\_incineracio:}\\
+     El cost d'incineració per tona de material de cada incineradora varia, pel que definim $IN_J$ com el preu per tonelada d'incineració de la incineradora $J$, tal que $J\in\{A,B\}$.\\
+     Si definim també com $T_J$ les tonelades que rep l'incineradora $J$, obtenim la següent expressió:
+     $$\mathlarger{\mathlarger{\sum}}_{J \in \{A,B\}} T_J\cdot IN_J$$
+     Com el que rep l'incineradora $J$ és la suma de les tonelades enviades a ella de les dues ciutats, podem expressar el cost d'incineració com:\\
+    $$cost\_incineracio = 40\cdot(T_{1A} + T_{2A}) + 30\cdot(T_{1B}+T_{2B})$$
+     \item \textbf{cost\_transport\_abocadors:}\\
+     El cost de transport de les incineradores als abocadors és anàleg al de les ciutats als incineradors. La diferencia és que les incineradores redueïxen els residus al $20\%$ del que eren (els multipliquen per un factor de $0.2$).\\
+     Per tant, si definim com $T_{JK}$ les tonelades que s'envien de la incineradora $J$ a l'abocador $K$ (essent $J \in \{A,B\}$ i $k \in \{N,S\}$, obtenim:\\
+     $$PT\cdot \left( \mathlarger{\mathlarger{\sum}}_{J\in \{A,B\}} \mathlarger{\mathlarger{\sum}}_{K\in\{N,S\}} T_{JK} \cdot d_{JK}\right) $$
+     on $d_{JK}$ és la distància entre la incineradora $J$ i l'abocador $K$ i $PT$ és el preu de transport per $km$ i per tonelada. Substituïnt, obtenim:\\
+     $$cost\_transport\_abocadors = 3\cdot0.2 \cdot (5\cdot T_{AN} + 8\cdot T_{AS} + 9\cdot T_{BN}+ 6\cdot T_{BS})$$
+ \end{itemize}
+ Podem ara definim la funció de cost a minimitzar de la següent forma:
+ \begin{equation*}
+ \fcolorbox{black}{white}{
+     \begin{split}
+        f(T_{IJ},T_{JK}) = & \hspace{0.4em} 3\cdot( 30\cdot T_{1A} + 20\cdot T_{1B} + 36\cdot T_{2A} + 42\cdot T_{2B})  +\\
+        &  + 40\cdot(T_{1A} + T_{2A}) + 30\cdot(T_{1B}+T_{2B})  + \\
+        &  +  3\cdot0.2 \cdot (5\cdot T_{AN} + 8\cdot T_{AS} + 9\cdot T_{BN}+ 6\cdot T_{BS}) 
+     \end{split}
+     }
+ \end{equation*}\\
+ Trobem ara les restriccions:
+ \begin{itemize}
+     \item \textbf{Restriccions sobre les ciutats:}\\
+     Cada ciutat te un nombre de residus que ha de transportar a les incineradores.\\
+     La ciutat s'ha de quedar sense residus.\\
+     Per tant, les tonelades de residus que es transporta entre una ciutat i una incineradora ha de ser extricament major o igual a $0$ i menor o igual al valor de residus que té:
+     $$ 0 \leq T_{IJ} \leq Res_I$$
+     on $Res_I$ són les tonelades de residus de la ciutat $I$, tal que $I\in{1,2}$.
+     \item \textbf{Restriccions sobre les incineradores:}\\
+     Cada incineradora té un màxim de residus que pot tractar; pel que la suma de residus enviat per les dues ciutats no pot suèrar aquest límit.\\
+     Les incineradores no poden portat residus (cendres) a les ciutats.\\
+     Per tant, les tonelades de residus que rep les incineradores ha de ser estrictament major o igual a $0$ i menor o igual al seu màxim:
+     $$0 \leq T_J = T_{1J}+T_{2J} \leq Max_J$$
+     on $Max_j$ són les tonelades de residus màximes que por tractar l'incineradora $J$, tal que $J\in{A,B}$.
+     \item \textbf{Restriccions sobre els abocadors:}\\
+     Els abocadors no tenen límitació de capacitat de tractament de residus.\\
+     Les incineradores han de enviar els residus que tenen als abocadors.\\
+     Per tant, les tonelades que s'han de enviar als abocadors han de ser estrictament major o igual a $0$ i menor o igual a $0.2$ vegades el nombre de tonelades transportades a l'incineradora:
+     $$ 0 \leq T_{JK} \leq 0.2\cdot T_J = 0.2 \cdot T_{1J}+T_{2J} $$
+     \item \textbf{Restriccions sobre els transports:}
+     Cal recalcar que tot el tonelatge de residus que s'envien ha de ser igual als que són rebuts; és a dir:
+     $$T_{IA} + T_{IB} = Res_I$$
+     $$T_{JN} + T_{JS} = 0.2 \cdot T_J = 0.2 \cdot (T_{1J}+T_{2J})$$
+ \end{itemize}
+ \newpage
+ \hspace{-1.5em}Finalment, podem expresar les restriccions del problema:
+ \begin{enumerate}
+     \item  $ 0 \leq T_{1A} \leq 500 $
+     \item  $ 0 \leq T_{1B} \leq 500 $
+     \item  $ 0 \leq T_{2A} \leq 400 $
+     \item  $ 0 \leq T_{2B} \leq 400 $
+     \item  $ T_{1A} + T_{1B} = 500 $
+     \item  $ T_{2A} + T_{2B} = 400 $
+     \item  $ 0 \leq T_{1A}+T_{2A} \leq 500 $
+     \item  $ 0 \leq T_{1B}+T_{2B} \leq 600 $
+     \item  $ 0 \leq T_{AN} \leq 0.2\cdot (T_{1A}+T_{2A}) $
+     \item  $ 0 \leq T_{AS} \leq 0.2\cdot (T_{1A}+T_{2A}) $
+     \item  $ 0 \leq T_{BN} \leq 0.2\cdot (T_{1B}+T_{2B}) $
+     \item  $ 0 \leq T_{BS} \leq 0.2\cdot (T_{1B}+T_{2B}) $
+     \item  $ T_{AN} + T_{AS} = 0.2 \cdot (T_{1A}+T_{2A}) $
+     \item  $ T_{BN} + T_{BS} = 0.2 \cdot (T_{1B}+T_{2B}) $
+\end{enumerate}
+Algunes d'aquestes restriccions són redundants, pel que si eliminem les restriccinos que no són actives ens quedem amb:
+\begin{enumerate}
+     \item  $ 0 \leq T_{1A} $
+     \item  $ 0 \leq T_{1B} $
+     \item  $ 0 \leq T_{2A} $
+     \item  $ 0 \leq T_{2B} $
+     \item  $ T_{1A} + T_{1B} = 500 $
+     \item  $ T_{2A} + T_{2B} = 400 $
+     \item  $ T_{1A}+T_{2A} \leq 500 $
+     \item  $ T_{1B}+T_{2B} \leq 600 $
+     \item  $ 0 \leq T_{AN} $
+     \item  $ 0 \leq T_{AS} $
+     \item  $ 0 \leq T_{BN} $
+     \item  $ 0 \leq T_{BS} $
+     \item  $ T_{AN} + T_{AS} = 0.2 \cdot (T_{1A}+T_{2A}) $
+     \item  $ T_{BN} + T_{BS} = 0.2 \cdot (T_{1B}+T_{2B}) $
+\end{enumerate}
+\newpage
+\subsubsection{Apartat b)}
+Transcribim el problema d'optimització (amb la funció de cost a minimitzar i les restriccions ja trobades a l'apartat \textit{(a)} ).\\
+Per tal de millorar l'accessibilitat a les dades i la modificació de les mateixes, s'ha decidit fer el programa $glpk$ que resol el problema amb un fitxer apart on es guarden les dades necesaries per a resoldre'l.\\
+\\
+El resultat que hem obtingut a l'hora d'executar el nostre programa ha sigu de:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ c | c }
+        \textbf{Variables} & \textbf{Valor en Tonelades} \\ \hline
+        $T_{1A}$ & 0 \\ \hline
+        $T_{1B}$ & 500 \\ \hline
+        $T_{2A}$ & 400 \\ \hline
+        $T_{2B}$ & 0 \\ \hline
+        $T_{AN}$ & 100 \\ \hline
+        $T_{AS}$ & 0 \\ \hline
+        $T_{BN}$ & 0 \\ \hline
+        $T_{BS}$ & 80 \\
+    \end{tabular}
+\end{table}\\
+És a dir, que hem de transportar tots el residus de la ciutat 1 a l'incineradora B i les seves cendres a l'abocador Sud.\\
+Analogamnet per a la ciutat 2, cal transportat els seus residus a l'incineradora 2 i les cendrees generades a l'abocador Nord.\\
+\\
+A més, podem saber que el cost (valor optim/mínim del problema) serà de $107200$\euro.\\
+\newpage
+\subsubsection{Apartat c)}
+Resolem ara cada una de les cuestions de l'apartat \textit{(c)}.
+\begin{enumerate}
+    \item \textbf{Com hauríem d’organitzar el transport?}\\
+    Si apliquem la restricció obtenim la següent distribució del transport:
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{ c | c }
+        \textbf{Variables} & \textbf{Valor en Tonelades} \\ \hline
+        $T_{1A}$ & 300 \\ \hline
+        $T_{1B}$ & 200 \\ \hline
+        $T_{2A}$ & 100 \\ \hline
+        $T_{2B}$ & 300 \\ \hline
+        $T_{AN}$ & 60 \\ \hline
+        $T_{AS}$ & 0 \\ \hline
+        $T_{BN}$ & 0 \\ \hline
+        $T_{BS}$ & 120 \\
+    \end{tabular}
+\end{table}\\
+El cost d'aquesta ruta serà de: $115940$\euro.
+    \item \textbf{Observant el fitxer de solució que es genera amb glpk (opció -o), de quina ruta
+valdria la pena ampliar-ne la capacitat? \\
+Quin seria el decreixement del cost per cada tona que s’ampliés?}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ c | c | c | c | c | c | c }
+        No. & Row name & St & Activity & Lower bound & Upper bound & Marginal \\\hline\hline
+        1 & $T_{1A}$ & NU & $300$ & $0$ & $300$ &   \\ \hline 
+        2 & $T_{1B}$ & B & $200$ & $0$ & $300$ & $-48$  \\\hline
+        3 & $T_{2A}$ & B & $100$ & $0$ & $300$ &  \\\hline
+        4 & $T_{2B}$ & NU & $300$ & $0$ & $300$ &  \\\hline
+        5 & $T_{AN}$ & B & $80$ & $0$ &  & \\ \hline
+        6 & $T_{AS}$ & NL & $0$ & $0$ &  & $9$ \\ \hline
+        7 & $T_{BN}$ & NL & $0$ & $0$ &  & $9$ \\ \hline
+        8 & $T_{BS}$ & B & $100$ & $0$ &  & \\
+    \end{tabular}
+    \caption{Taula extreta amb la comanda \texttt{-o} del $glpk$}
+    \label{tab:my_label}
+\end{table}\\
+Observem mitjançant la taula que la variable que té el marginal més petit (i negatiu) és el $T_{1B}$, amb un marginal de $-48$ (és a dir, quant disminueix el cost per tona de residus transportada).\\
+\\
+Si s'amplies la ruta $T_{2B}$ en 200 tonelades més obtindrien un decreixement (teoric) de $98.56\cdot 200$\euro \hspace{0.06215em} sobre el valor obtingut en l'apartat \textit{(c1)}; és a dir, que tindrà un cost de $(115940-48\cdot 200)$\euro\hspace{0.06215em}$= (115940-9600)$\euro\hspace{0.06215em}$=106340$\euro.
+    \item \textbf{Si calculem el cost per a aquesta ampliació de capacitat (només en una ruta), quadra amb el que observem al fitxer generat amb l’opció -o? Per què?}\\
+    Si calculem el cost del transport dels residus amb la ruta ente la ciutat $2$ i l'incineradora $B$ ampliada, obtenim un cost total de $108060$\euro.\\
+    Deduïm que l'aproximació feta pel margina (pendent del gradient de la funció) és prou bona.
+\end{enumerate}
+\newpage
+\subsubsection{Apartat d)}
+Relcalculant amb les noves dades, hem obtingut la següent resposta:\\
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ c | c }
+        \textbf{Variables} & \textbf{Valor en Tonelades} \\ \hline
+        $T_{1A}$ & 500 \\ \hline
+        $T_{1B}$ & 0 \\ \hline
+        $T_{2A}$ & 0 \\ \hline
+        $T_{2B}$ & 400 \\ \hline
+        $T_{AN}$ & 100 \\ \hline
+        $T_{AS}$ & 0 \\ \hline
+        $T_{BN}$ & 0 \\ \hline
+        $T_{BS}$ & 80 \\
+    \end{tabular}
+\end{table}\\
+És a dir, les rutes són les mateixes que en l'apartat \textit{(b)}, peró el cost d'aquesta ruta és de $53780$\euro\hspace{0.0625em}(es redueix a casi la meitat el cost trobar inicialment).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
