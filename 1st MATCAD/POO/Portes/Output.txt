@@ -1,0 +1,63 @@
+chain1 = Log(Unlock(code_unlock, FireAlarm(code_fire_alarm, Open(code_open, Lock(None,None)))))
+
+El primer codi és el 1111 que s’usa per obrir portes:
+Com al chain 1 començem amb un open, la porta s’obre.
+
+El següent codi és el 2222:
+Aquest codi obre la porta i crida a l’agencia de seguretat.
+
+El següent codi és el 1234:
+Aquest codi no és correcte per cap de les opcions (open, firealarm, unlock), llavors no es pot dur a terme l’unlock.
+Com hem dit, el codi 1234 no fa res, per tant s’imprimeixen el nombre d’intents i apareix un missatge per informar que s'ha superat el nombre màxim d'intents.
+
+El següent codi és el 4321:
+Tampoc és correcte, per tant, com en el cas anterior, el que canvia és que num_trials augmenta en 1.
+
+Ara amb el codi 5555:
+Tampoc és correcte, la porta es bloqueja perquè hem superat el màxim nombre d’intents possibles.
+
+El següent codi és el 6666:
+No es fa res ja que el codi és invàlid, amb els següents codis 77777 i 1111 passa el mateix.
+
+El següent codi és el 3333:
+Desbloqueja la porta. 
+
+Finalment, el 2222:
+La porta s’obre i s’avisa a l’entitat de seguretat.
+
+
+
+chain2 = Log(Open(code_open, None))
+
+El primer codi és el 1111:
+S’obre la porta.
+
+Amb els següents 3 codis (2222, 1234, 4321, 55555, 66666 i 77777):
+La porta es tanca, cap és el codi correcte per obrir la porta, per tant segueix tancada. 
+
+Es torna a obrir amb el codi 11111.
+
+Els 2 últims codis són erronis per tant la porta segueix tancada.
+
+
+
+chain3 = Log(FireAlarm(code_fire_alarm, Open(code_open, None)))
+
+El primer codi és el 1111:
+S'obre la porta.
+
+El segon codi és el 2222:
+La porta s’obre i crida a l’entitat de seguretat.
+
+Finalment, els següents cinc codis són erronis, per tant la porta queda tancada (ja que chain3 no té Unlock).
+
+El següent codi és el 1111:
+S'obre la porta.
+
+El següent codi és el 3333: 
+És erroni i la porta queda tancada.
+
+El següent codi és el 2222:
+La porta s'obre i crida a l'entitat de seguretat.
+
+

@@ -1,0 +1,40 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Observable{
++ __init__(self, nom_observable)
++ add_observer(self,observer)
++ publish_news(self,event)
+}
+
+
+interface Observer{
++ __init__(self, observer)
++ update(self,observer, nom_observable,event)
++ __str__(self)
+}
+
+class NewsAgency{
++ __init__(self, nom_observable)
++ add_observer(self, observer)
++ publish_news(self, event)
+}
+
+class Newspaper{
++ __init__(self, observer)
++ __str__(self)
++ update(self, observer, nom_observable, event)
+}
+
+class SMS{
++ __init__(self, telefon)
++ __str__(self)
++ update(self, telefon, nom_observable, event)
+}
+
+Observable *->  NewsAgency
+Observer *->  Newspaper
+Observer *-> SMS
+
+
+@enduml

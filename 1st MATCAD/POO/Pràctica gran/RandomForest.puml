@@ -1,0 +1,108 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+abstract class RandomForest{
+- max_depth: int
+- min_size: int
+- ratio_samples: float
+- num_trees: int
+- ratio_features: float
+- criterion: Impurity
++ fit(X: float[][], y: float[])
++ predict(X: float[][]): int[]
++ cart_cost(left_dataset: Dataset, right_dataset: Dataset): float
++ make_decision_trees(dataset: Dataset)
++ make_node(dataset: Dataset, depth: int)
++ make_parent(dataset: Dataset, depth: int)
++ <i>make_leaf(dataset: Dataset)</i>
++ _make_decision_trees_multiprocessing((dataset: Dataset)
++ _target(dataset: Dataset, nproc: int)
++ next_fold(num_samples_train: int, num_folds: int)
+}
+
+class RandomForestClassifier{
++ make_leaf(dataset: Dataset))
++ combine_predictions(predictions: list)
+}
+
+class RandomForestRegressor{
++ make_leaf(dataset: Dataset))
++ combine_predictions(predictions: list)
+}
+
+RandomForest ^-- RandomForestClassifier
+RandomForest ^-- RandomForestRegressor
+
+
+
+
+interface Impurity{
++ <i>calcul_impurity(dataset: Dataset)</i>
+}
+
+class Gini{
++ calcul_impurity(dataset:Dataset): float
+}
+
+class Entropy{
++ calcul_impurity(dataset:Dataset): float
+}
+
+class MSE{
++ calcul_impurity(dataset:Dataset): float
+}
+
+Impurity  <|.. Gini
+Impurity  <|.. Entropy
+Impurity  <|.. MSE
+Impurity <--* RandomForest
+
+
+
+
+interface Node{
++ <i>predict(x: Dataset): int</i>
+}
+
+class Leaf{
+- label: int
++ predict(x: Dataset): int
+}
+
+class Parent{
+- feature_index: int
+- threshold: float
+- left_dataset: Dataset
+- right_dataset: Dataset
++ predict(x: Dataset): int
+}
+
+Node ^-- Leaf
+Node ^-- Parent
+Parent --> "1" Node : left_child
+Parent --> "1" Node : right_child
+Node <--* RandomForest
+
+
+
+
+class Dataset{
+- X: float[][]
+- y: int[]
++ divide(column: int, threshold: float): Dataset (left and right)
++ random_sampling(ratio: float, replace: boolean): Dataset
++ distribution(): float[]
++ most_frequent_label(): int
+}
+
+interface Impurity
+note left: Strategy
+
+abstract class RandomForest
+note left: Template method
+
+interface Node
+note left: Association
+
+@enduml

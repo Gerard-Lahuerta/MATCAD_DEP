@@ -1,0 +1,95 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class DualNumber{
++ u: double
++ uprime: double
++ DualNumber(double,double)
++String(): String
+}
+
+class main {
+-{static} f(double): double
+-{static} df(double):double
++ {static} main(String[]args)
+}
+
+interface Expression{
++ evaluate(DualNumber): DualNumber
+
+}
+
+class Constant{
+- double value
++ Constant(double)
++ Evaluate(DualNumber): DualNumber
+
+}
+
+class X{
++ X()
++ Evaluate(DualNumber): DualNumber
+
+}
+
+abstract class BinaryOperator{
+# left: Expression
+# right: Expression
+
+}
+
+class Sin{
+- expresio: Expression
++ Sin(Expression)
++ Evaluate(DualNumber): DualNumber
+}
+
+class Cos{
+- expresio: Expression
++ Cos(Expression)
++ Evaluate(DualNumber): DualNumber
+
+}
+
+
+
+class Add{
++ Add(Expression,Expression)
++ Evaluate(DualNumber): DualNumber
+}
+
+class Substract{
++ Substract(Expression,Expression)
++ Evaluate(DualNumber): DualNumber
+}
+
+class Multiply{
++ Multiply(Expression,Expression)
++ Evaluate(DualNumber): DualNumber
+}
+
+class Divide{
++ Divide(Expression,Expression)
++ Evaluate(DualNumber): DualNumber
+}
+
+
+
+BinaryOperator ^-- Add
+BinaryOperator ^-- Substract
+BinaryOperator ^-- Multiply
+BinaryOperator ^--  Divide
+
+Expression ^..  Constant
+Expression  ^..  X
+Expression "1" ^..  Sin
+Expression  <--o "expr" Sin
+Expression "1" ^..  Cos
+Expression <--o "expr" Cos
+Expression  ^.. "left right" BinaryOperator
+Expression "2" <--o BinaryOperator
+
+
+
+@enduml
+
