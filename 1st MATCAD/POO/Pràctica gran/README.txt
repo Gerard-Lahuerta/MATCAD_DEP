@@ -1,7 +1,6 @@
 ﻿AUTORS:
 
-* Sofia Di Capua Martín Mas : 1603685
-* Andrea Gonzalez Aguilera : 1603921
+* Gerard Lahuerta Martín: 1601350
 * Ona Sánchez Núñez : 1601181
 
 
