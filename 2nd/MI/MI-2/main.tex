@@ -1,0 +1,164 @@
+\documentclass[12pt]{article}
+
+%IMPORTS
+\usepackage[catalan]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ragged2e} 
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[usenames]{color}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{chngcntr}
+\usepackage{ragged2e}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{vmargin}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{url}
+
+\definecolor{blue(ncs)}{rgb}{0.0, 0.53, 0.74}
+\setlength{\columnsep}{70pt}
+
+
+
+\title{Pràctica 2 MI}
+\author{Gerard Lahuerta Martín}
+\date{2 de Desembre del 2021}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace{4cm}
+    {\bfseries\LARGE Universitat Autònoma de Barcelona\newline Facultat de Ciències\par}
+    \vspace{6cm}
+    {\scshape\Huge Modelització i Inferencia Pràctica 2 \par} 
+    \vspace{2cm}
+    {\Large \itshape Autor: \par}
+    {\Large Gerard Lahuerta Martín\par}
+    {\small NIU: 1601350\par}
+    \vspace{3cm}
+    {\Large 2 de Desembre del 2021\par}
+\end{titlepage}
+
+\justifying
+
+
+\newpage
+\setcounter{page}{2}
+\pagestyle{plain}
+\tableofcontents
+\cleardoublepage
+\addcontentsline{}{chapter}{}
+
+
+\section{Presentació del problema}
+Suposa una mostra aleatòria $X_1, \cdots , X_n$ distribuïda segons una $Weibull(\alpha,k)$ amb la següent 
+funció de densitat:
+$$f_X(x|\alpha,k) = \frac{k}{\alpha}x^{k-1}e^{-\frac{x^k}{\alpha}}\text{, }x>0\text{, } \alpha,k>0$$
+Considera $k=2$.
+\begin{enumerate}
+\item [(a)] Troba l'estimador de màxima versemblança per a $\alpha$, i comprova que el que has trobat és un maximitzador de la funció de versemblança.
+\item [(b)] Demostra que l'estimador de màxima versemblança de $\alpha$, $\hat{\alpha}$, és un estimador no esbiaxat per a $\alpha$.\\
+\textit{Pista: Per a resoldre aquest exercici, necessites trobar primer la distribució de $X_i^2$ sabent que $X_i \sim Weibull(\alpha,2)$. Pots fer la demostració a partir de la distribució de probabilitat acumulada (CDF) sabent que:}
+$$\mathbb{P}(X_i^2\leq c) = \mathbb{P}(X_i\leq \sqrt{c}) = \int_{0}^{\sqrt{c}} f_{X_i}(x_i|\alpha)\partial x_i$$
+\item [(c)] Calcula la informació de Fisher esperada per a $\alpha$
+\item [(d)] És $\hat{\alpha}$ l'estimador per a $\alpha$ més eficient entre tots els estimadors no esbiaxats? Justifica la teva resposta.
+\end{enumerate}
+\newpage
+\section{Resolució del primer apartat}
+Trobem l'estimador de màxima versemblança per a $\alpha$ (que anomenarem $\hat{\alpha}$) a partir del seu $MLE$ (\textit{Most Likelihood Estimator}): Calculem la funció de versemblança, la log-versemblança i la funció "\textit{score}":
+\begin{itemize}
+    \item Funció de versemblança: $L(\alpha|x)$
+    \begin{multline*}
+        L(\alpha|x)=\prod_{i=1}^{n}f_{X_i}(x_i|\alpha,2)=\prod_{i=1}^{n}\left( \frac{2}{\alpha}x_i e^{-\frac{x_i^2}{\alpha}} \right) = \left( \frac{2}{\alpha} \right)^n e^{-\frac{\sum_{i=1}^{n}x_i^2}{\alpha}}\prod_{i=1}^{n}x_i
+    \end{multline*}
+    \item Funció de log-versemblança: $l(\alpha|x)=\log(L(\alpha|x))$
+    \begin{multline*}
+        l(\alpha|x)=\log \left[\left( \frac{2}{\alpha} \right)^n e^{-\frac{\sum_{i=1}^{n}x_i^2}{\alpha}}\prod_{i=1}^{n}x_i\right]=n\log\left(\frac{2}{\alpha}\right) -\frac{\sum_{i=1}^{n}x_i^2}{\alpha}+\log\left(\prod_{i=1}^{n}x_i\right)=\\=n\left(\log(2)-\log(\alpha)\right)-\frac{1}{\alpha}\sum_{i=1}^{n}(x_i^2)+\sum_{i=1}^{n}(\log(x_i))\textcolor{white}{sdfghjhgfdgggggggfgh}
+    \end{multline*}
+    \item Funció \textit{score}: $s(\alpha|x)=\frac{\partial}{\partial\alpha}l(\alpha|x)$
+    \begin{multline*}
+        s(\alpha|x)=\frac{\partial}{\partial\alpha}\left( n\left(\log(2)-\log(\alpha)\right)-\frac{1}{\alpha}\sum_{i=1}^{n}(x_i^2)+\sum_{i=1}^{n}(\log(x_i)) \right)=\\=\frac{1}{\alpha^2}\sum_{i=1}^{n}(x_i^2)-\frac{n}{\alpha}\textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+    \end{multline*}
+    \item Igualem la funció score a $0$ per a trobar el màxim.
+    \begin{multline*}
+        s(\alpha|x)=0 \Longleftrightarrow \frac{1}{\alpha^2}\sum_{i=1}^{n}(x_i^2)-\frac{n}{\alpha}=0 \Longrightarrow \frac{1}{\alpha^2}\sum_{i=1}^{n}(x_i^2) = \frac{n}{\alpha} \Longrightarrow \frac{1}{n}\sum_{i=1}^{n}(x_i^2) = \alpha  \Rightarrow\\
+        \Longrightarrow \hat{\alpha} = \frac{1}{n}\sum_{i=1}^{n}(x_i^2) \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+    \end{multline*}
+    \item Comprovem ara que el valor de l'estimador $\hat{\alpha}$ trobat es el màxim a partir del signe de la derivada de la funció \textit{score}: $s'(\alpha|x)$.
+    \begin{multline}
+        s'(\alpha|x)=\frac{-2}{\alpha^3}\sum_{i=1}^{n}(x_i^2)+\frac{n}{\alpha^2}\underset{\underset{\textbf{(\textit{$\alpha=\hat{\alpha}$})}}{\uparrow}}{=}-2n^3\left(\sum_{i=1}^{n}(x_i^2)\right)^{-2} + n^3 \left(\sum_{i=1}^{n}(x_i^2)\right)^{-2} = \\= -n^3\left(\sum_{i=1}^{n}(x_i^2)\right)^{-2} < 0 \text{ ja que $n\in\mathbb{N}$($n>0$) i $\left(\sum_{i=1}^{n}(x_i^2)\right)^{-2}\in\mathbb{R^+}$} \Rightarrow\\ \Longrightarrow  \fcolorbox{black}{white}{ \textcolor{blue}{$\hat{\alpha} = \frac{1}{n}\sum_{i=1}^{n}(x_i^2) $ és realment l'estimador de màxima versemblança per  $\alpha$} } \label{score}
+    \end{multline}
+\end{itemize}
+\newpage
+\section{Resolució del segon apartat}
+Comprovem si l'estimador $\hat{\alpha}$ trobat a l'apartat anterior és no esbiaxat, sabent que no ho serà si i nomès si $Bias(\hat{\alpha})=0$. Calculem el $Bias(\hat{\alpha})=E(\hat{\alpha})-\alpha$, calculant previamente l'esperança de l'estimador: $E(\hat{\alpha})$
+\begin{itemize}
+    \item Càlcul de l'esperança de l'estimador $\hat{\alpha}: E(\hat{\alpha})$
+    \begin{multline*}
+        E(\hat{\alpha})= E\left(\frac{1}{n}\sum_{i=1}^{n}(X_i^2)\right) \underset{\underset{\textbf{(\textit{I})}}{\uparrow}}{=} E\left(X_i^2 \right) \\
+    \end{multline*}
+    (I): \textit{$X_1, \cdots , X_n$ independents i idènticament distribuïdes}\\
+    
+    \item Calculem ara $E(X_i^2)$ trobat la distribució de $X_i^2$:
+    \begin{multline}
+    \label{esperanza}
+        \mathbb{P}(X_i^2\leq u)=\mathbb{P}(X_i \leq \sqrt{u}) = \int_0^{\sqrt{u}} \left( \frac{2}{\alpha}x_i e^{-\frac{x_i^2}{\alpha}} \right) dx = 1 -e^{\frac{-u}{\alpha}} \Longrightarrow \\ \Longrightarrow X_i^2= \left(1- e^{\frac{-x_i}{\alpha}}\right)'
+        = \frac{1}{\alpha}e^{\frac{-x_i}{\alpha}} \Longrightarrow \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq} \\ \Longrightarrow E(X_i^2)= \int_{0}^{\infty} \frac{1}{\alpha}xe^{\frac{-x}{\alpha}} dx = \left[ -(\alpha+x)e^{\frac{-x}{\alpha}} \right]_{0}^{\infty} = 0-(-\alpha)=\alpha\textcolor{white}{qqqqqqqqqqq}
+    \end{multline}
+     \item Calculem ara el $Bias(\hat{\alpha})$:
+     \begin{multline*}
+         Bias(\hat{\alpha})=E(\hat{\alpha})-\alpha=\alpha-\alpha=0 \Longrightarrow  \fcolorbox{black}{white}{ \textcolor{blue}{L'estimador $\hat{\alpha}$ és no esbiaxat} }
+     \end{multline*}
+\end{itemize}
+\newpage
+\section{Resolució del tercer apartat}
+Calculem l'informació de Fisher esperada per a $\alpha$: $J(\alpha)$, calculant previament l'informació observada de Fisher, $I(\alpha)$.
+\begin{itemize}
+    \item L'informació observada de Fisher: $I(\alpha)=-s'(\alpha)$ calculada anteriorment a \href{score}{\textcolor{blue(ncs)}{l'apartat 2.1}}
+    \begin{multline*}
+        I(\alpha)= -\frac{n}{\alpha^2} + \frac{2}{\alpha^3}\sum_{i=1}^{n}(x_i^2)\\
+    \end{multline*}
+    \item Informació de Fisher esperada: $J(\alpha)=E(I(\alpha))$
+    \begin{multline*}
+        J(\alpha) = E \left(\frac{-n}{\alpha^2} + \frac{2}{\alpha^3}\sum_{i=1}^{n}(x_i^2)\right) = \frac{-n}{\alpha^2} + \frac{2n}{\alpha^3}E(x_i^2) \underset{\underset{\textbf{(\textit{II})}}{\uparrow}}{=} \frac{-n}{\alpha^2} + \frac{2n}{\alpha^2} = \frac{n}{\alpha^2} \Longrightarrow\\
+        \Longrightarrow  \fcolorbox{black}{white}{ \textcolor{blue}{L'informació de Fisher esperada per a $\alpha$ és: $J(\alpha)=\frac{n}{\alpha^2}$} } \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+    \end{multline*}
+    (II): \textit{$E(X_i^2)=\alpha$ la sabem per \href{esperanza}{\textcolor{blue(ncs)}{l'apartat 3.2}} }\\
+\end{itemize}
+\newpage
+\section{Resolució del quart apartat }
+Sabem que el millor estimador no esbiaxat serà aquell que tingui una menor variança. Per descobrir si $\hat{\alpha}$ és el millor estimador calculem la seva variança: $V(\hat{\alpha})$.
+\begin{itemize}
+    \item Calculem $V(\hat{\alpha})$:
+    \begin{multline*}
+        V(\hat{\alpha})=V\left(\frac{1}{n}\sum_{i=1}^{n}(X_i)^2\right) = \frac{1}{n^2}V\left(\sum_{i=1}^{n}(X_i)^2\right) = \frac{1}{n}V\left(X_i^2\right)  \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+    \end{multline*}
+    \item Calculem $V(X_i^2)$:\\\\
+    $\left.
+\begin{array}{ccccccc}
+    V(X_i^2) & = & E\left((X_i^2)^2\right) -E(X_i^2)^2 & = & E\left((X_i^2)^2\right) - \alpha^2 \\
+                  \\
+    E(\hat{\alpha}^2) & = & \int_0^{\infty} x^2 \frac{1}{\alpha}e^{\frac{-x}{\alpha}} dx & = &  \left[ -\left( x^2+2x\alpha +2\alpha^2 \right)e^{\frac{-x}{\alpha}} \right]_0^{\infty} & = & 2\alpha^2
+\end{array}\right\}\Rightarrow \\\\
+\Longrightarrow V(X_i^2)=\alpha^2 \Longrightarrow V(\hat{\alpha})=\frac{\alpha^2}{n}
+$\end{itemize}
+\vspace{2em}Sabem, també, que la Cota de Cramer-Rao \big($CR=J^{-1}(\alpha)$\big) ens diu si un estimador és o no eficient i, a  més, si es el més eficient.\\
+Serà l'estimador més eficient si la seva variança és igual a la Cota de Cramer Rao. \\\\
+\begin{itemize}
+\item Calculem doncs la Cota de Cramer Rao:
+\begin{multline*}
+    CR=J^{-1}(\alpha)= \frac{1}{\frac{n}{\alpha^2}} = \frac{\alpha^2}{n} \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+\end{multline*}
+\end{itemize}
+Observem que $CR=V(\alpha)\Longrightarrow$\\
+$\Longrightarrow$\fcolorbox{black}{white}{ \textcolor{blue}{L'estimador $\hat{\alpha}$ és el millor d'entre tots els estimadors no esbiaxats} }
+\end{document}

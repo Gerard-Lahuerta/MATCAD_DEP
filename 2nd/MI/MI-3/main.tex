@@ -1,0 +1,206 @@
+\documentclass[12pt]{article}
+
+%IMPORTS
+\usepackage[catalan]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ragged2e} 
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[usenames]{color}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{chngcntr}
+\usepackage{ragged2e}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{vmargin}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{url}
+
+\definecolor{blue(ncs)}{rgb}{0.0, 0.53, 0.74}
+\setlength{\columnsep}{70pt}
+
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace{4cm}
+    {\bfseries\LARGE Universitat Autònoma de Barcelona\newline Facultat de Ciències\par}
+    \vspace{6cm}
+    {\scshape\Huge Modelització i Inferencia Pràctica 3 \par} 
+    \vspace{2cm}
+    {\Large \itshape Autor: \par}
+    {\Large Gerard Lahuerta Martín\par}
+    {\small NIU: 1601350\par}
+    \vspace{3cm}
+    {\Large 16 de Desembre del 2021\par}
+\end{titlepage}
+
+\justifying
+
+
+\newpage
+\setcounter{page}{2}
+\pagestyle{plain}
+\tableofcontents
+\cleardoublepage
+\addcontentsline{}{chapter}{}
+
+
+\section{Presentació del problema}
+A un estudi s'avalua la sensibilitat $\pi$ d'un test diagnòstic per l'asma que és més econòmic
+que el test de referència. Cada pacient és testejat repetidament fins que s'obté el primer
+positiu. Considera que la variable aleatòria $X_i$ és el nombre de tests que s'ha fet el pacient i
+fins a obtenir el primer positiu i que tots els pacients i els successius tests són independents.
+Considera, a més a més, que la sensibilitat $\pi$ és igual per a tots els pacients i tests.
+\begin{enumerate}
+\item [(a)] Deriva la funció de massa de probabilitat de $X_i$.
+\item [(b)] Escriu la log-versemblança per a una realització $x_1,\cdots,x_n$ d'una mostra aleatòria $X_1,\cdots,X_n$ i calcula l'estimador màxim versemblant de $\pi$: $\hat{\pi}$.
+\item [(c)] Calcula l'error estàndard de $\hat{\pi}$: $se(\hat{\pi})$.
+\end{enumerate}
+Es realitza l'experiment anterior amb nou pacients i s'obtenen els següents resultats:
+$$\{ x_1 = 3, x_2 = 5, x_3 = 2, x_4 = 6, x_5 = 9, x_6 = 1, x_7 = 2, x_8 = 2, x_9 = 3\}$$
+\begin{enumerate}
+\item [(d)] Donada l'estimació puntual per a $\pi$ basada en l'estimador màxim versemblant trobat a (b) i construeix l'interval de confiança de \textit{Wald} del $95\%$ per a $\pi$. \\Per què aquest interval de confiança podria ser problemàtic? Justifica la teva resposta.
+\item [(e)] Considera la següent parametrització:
+$$\eta = \log\left( \frac{\pi}{1-\pi}\right)$$
+Troba l'estimador i l'estimació màxim versemblant per a $\eta, \hat{\eta},$ i construeix l'interval de confiança de \textit{Wald} del $95\%$ per a $\eta$.
+\item [(f)] Compara els intervals obtinguts als apartats (d) i (e) un cop retransformat per a $\pi$.
+\end{enumerate}
+\newpage
+
+\section{Resolució del primer apartat}
+Observem que la variable aleatòria $X_i$, per a $i\in\matbbb{N}$, 
+% es tracta d'una variable aleatoria Geomètrica ($X_i\sim Geom(\pi)$, essent el paràmetre $\pi\in[0,1]$ la probabilitat d'èxit), 
+compta el nombre d'intents a fer l'experiment (el test clínic) per a obtenir el primer èxit (positiu en el test). Per tant, la funció de massa de $X_i$  serà el producte entre la probabilitat de que no es tracti d'un exit en els primers $x_i-1$ intents i que sigui exitos l'intent $x_i$:
+\begin{multline*}
+P(X_i = x_i)=\pi(1-\pi)^{x_i-1} :=f(\pi|x_i) \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+\end{multline*}
+Observem per tant que és la mateixa que la de la variable aleatoria Geomètrica amb paràmetre desconegut $\pi$ la probabilitat d'exit.\\\\
+$\Longrightarrow$ \fcolorbox{black}{white}{ \textcolor{blue}{La funció de densitat de la variable $X_i$ és:  $f(\pi|x_i)=\pi(1-\pi)^{x_i-1}$}}
+\newpage
+
+\section{Resolució del segon apartat}
+Calculem la log-versemblança per a una realització $x_1,\cdots,x_n$ d'una mostra aleatòria $X_1,\cdots,X_n$, calculant prèviament la funció de màxima versemblança de l'estimador $\hat{\pi}$.
+\begin{itemize}
+\item Funció de màxima versemblança de l'estimador: $L(\pi|x_i)$
+\begin{multline*}
+L(\pi|x_i) = \prod_{i=1}^n\left( F(\pi|x_i) \right) = \prod_{i=1}^n\left( \pi(1-\pi)^{x_i-1} \right) = \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq} \\
+= \pi^n (1-\pi)^{-n + \sum_{i=1}^n x_i} \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+\end{multline*}
+\item Funció log-versemblança de l'estimador: $l(\pi|x_i)$
+\begin{align*}
+l(\pi|x_i) & = & \log ( L(\pi|x_i) ) = \log \left( \pi^n (1-\pi)^{-n + \sum_{i=1}^n x_i} \right) = \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq} \\
+& = & n\log(\pi)+ \left(-n + \sum_{i=1}^n x_i\right)\log(1-\pi)\Longrightarrow \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+\end{align*}
+\end{itemize}
+$\Longrightarrow$ \fcolorbox{black}{white}{ \textcolor{blue}{Log-versemblança: $l(\pi|x_i) = n\log(\pi)+ \left(-n + \sum_{i=1}^n x_i\right)\log(1-\pi)$}}\\\\
+A partir de la funció log-versemblança podem calcular la funció \textit{score} que, trobant el seu màxim, ens permet saber l'estimador $\hat{\pi}$ màxim versemblant.
+\begin{itemize}
+\item Calcul de la funció \textit{score}: $s(\pi|x_i)$
+\begin{align*}
+s(\pi|x_i) = l'(\pi|x_i) = \left(n\log(\pi)+ \left(-n + \sum_{i=1}^n x_i\right)\log(1-\pi) \right)' = \frac{n}{\pi} +\frac{n - \sum_{i=1}^n x_i}{1-\pi}
+\end{align*}
+\begin{multline*}
+s(\pi|x_i) = 0 \Longleftrightarrow \frac{n}{\pi} +\frac{n - \sum_{i=1}^n x_i}{1-\pi} = 0 \Longleftrightarrow \frac{n}{\pi} = \frac{-n + \sum_{i=1}^n x_i}{1-\pi} \Longleftrightarrow\\
+\Longleftrightarrow n-n\pi = -n\pi +\pi\sum_{i=1}^n x_i \Longleftrightarrow \pi = \cfrac{n}{\sum_{i=1}^n x_i} \Longrightarrow \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}\\
+\Longrightarrow \hat{\pi} = \Bar{x}^{-1} \text{ on $\Bar{x}=\frac{\sum_{i=1}^n x_i}{n}$ és la mitjana de les mostres} \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+\end{multline*}
+\newpage
+\item Trobem si és el màxim estimador:
+\begin{multline*}
+s'(\pi|x_i) = \left( \frac{n}{\pi} +\frac{n - \sum_{i=1}^n x_i}{1-\pi} \right)' = \frac{-n}{\pi^2} + \frac{n - \sum_{i=1}^n x_i}{(1-\pi)^2} = \\ = \frac{-n(1-\pi)-n\pi^2-\pi^2\sum_{i=1}^n x_i}{\pi^2(1-\pi)^2} = \frac{2n\pi-n-\pi^2\sum_{i=1}^n x_i}{\pi^2(1-\pi)^2} < 2n\pi-n-\pi^2 = 0 \Longleftrightarrow \\
+\Longleftrightarrow \pi = \frac{-2n \pm \sqrt{4n^2-4}}{-2} = n \pm \sqrt{n^2-1} \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq} \\ \text{ com que $n\in\mathbbb{N} \Rightarrow$ té solució real, però no pertany a $[0,1]$} \Longrightarrow \hat{\pi} = \Bar{x}^{-1} \text{és màxim}
+\end{multline*}
+\end{itemize}
+\label{estimador}
+$\Longrightarrow$ \fcolorbox{black}{white}{ \textcolor{blue}{L'estimador màxim versemblant de $\pi$ és: $\hat{\pi}= \Bar{x}^{-1}$}}\\\\
+\newpage
+
+\section{Resolució del tercer apartat}
+Calculem l'error estàndard de l'estimador $\hat{\pi}$, $se(\hat{\pi})$, sabent que: $se(\hat{\pi})=\sqrt{J^{-1}(\pi)}$, on $J(\pi)$ és la informació de Fisher.
+
+\begin{itemize}
+\item Càlcul de la informació esperada de Fisher: $J(\pi)=E(I(\pi))$, on $I(\pi)$ és la informació observada de Fisher.
+\begin{align*}
+I(\pi) & = & -s'(\pi|X_i) = -\left( \frac{-n}{\pi^2} + \frac{n - \sum_{i=1}^n X_i}{(1-\pi)^2} \right) = \frac{n}{\pi^2} - \frac{n - \sum_{i=1}^n X_i}{(1-\pi)^2} = \\
+& = &\frac{n(1-\pi)^2-n\pi^2+\pi^2\sum_{i=1}^n X_i}{\pi^2(1-\pi)^2} = \frac{n-2n\pi +\pi^2\sum_{i=1}^n X_i}{\pi^2(1-\pi)^2}
+\end{align*}
+\begin{align*}
+J(\pi) & = & E\left( \frac{n-2n\pi +\pi^2\sum_{i=1}^n X_i}{\pi^2(1-\pi)^2}\right)\underset{\underset{\textbf{(\textit{I})}}{\uparrow}}{=}\frac{1}{\pi^2(1-\pi)^2}\left( n-2n\pi +n\pi^2E(X_i) \right) \underset{\underset{\textbf{(\textit{II})}}{\uparrow}}{=}\\
+& = & \frac{1}{\pi^2(1-\pi)^2}\left( n-2n\pi +n\pi^2\frac{1}{\pi} \right) = \frac{1}{\pi^2(1-\pi)^2} \left( n-2n\pi +n\pi \right) = \textcolor{white}{qqqq} \\
+& = &\frac{1}{\pi^2(1-\pi)^2} \left( n-n\pi \right) = \frac{n}{\pi^2(1-\pi)} \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+\end{align*}
+(I): \textit{$X_1, \cdots , X_n$ independents i idènticament distribuïdes}\\
+(II): \textit{$E(X_i)=\frac{1}{\pi}$}
+\end{itemize}
+\begin{multline*}
+\Longrightarrow se(\hat{\pi}) = \sqrt{\left( \frac{n}{\pi^2(1-\pi)} \right)^{-1}} = \pi\sqrt{\frac{1-\pi}{n}} \Longrightarrow \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+\end{multline*}
+\label{se}
+$\Longrightarrow$ \fcolorbox{black}{white}{ \textcolor{blue}{L'error estàndard de l'estimador $se(\hat{\pi})=\pi\sqrt{\frac{1-\pi}{n}}$} }
+\newpage
+
+\section{Resolució del quart apartat}
+Sabent que els resultats de 9 experiments: $$\{ x_1 = 3, x_2 = 5, x_3 = 2, x_4 = 6, x_5 = 9, x_6 = 1, x_7 = 2, x_8 = 2, x_9 = 3\}$$
+Calculem ara l'interval de confiança de \textit{Wald} del $95\%$ per al paràmetre $\pi$.\\
+Sabem que l'interval de confiança de \textit{Wald} per al paràmetre $\pi$ (de manera asimptòtica) és: $\pi\in\left[ \hat{\pi} \pm z_{1-\frac{\alpha}{2}} \cdot se(\hat{\pi}) \right]$ on:
+\begin{itemize}
+\item $\hat{\pi}$ és l'estimador màxim versemblant del paràmetre $\pi$ trobat a \href{estimador}{\textcolor{blue(ncs)}{l'apartat 3}}:
+$$\hat{\pi} = \frac{9}{3+5+2+6+9+1+2+2+3} = \frac{9}{33}=\frac{3}{11} = 0.\Bar{27}$$
+\item $ z_{1-\frac{\alpha}{2}} $ és el quantil $1-\frac{\alpha}{2}$ corresponent a la distribució Normal amb paràmetres $(1,0)$, en aquest cas, com volem calcular l'interval de confiança del $95\% \Rightarrow$ \\$ \Rightarrow \alpha=0,05 \Rightarrow z_{0,975} = 1,96$
+\item $se(\hat{\pi})$ és l'error estàndard del paràmetre trobat a \href{se}{\textcolor{blue(ncs)}{l'apartat 4}}:
+$$se(\hat{\pi})=\hat{\pi}\sqrt{\frac{1-\hat{\pi}}{n}} = \frac{3}{11}\sqrt{\frac{1-\frac{3}{11}}{9}} = \frac{1}{11}\sqrt{\frac{8}{11}} = \frac{2}{11}\sqrt{\frac{2}{11}} = 0,07752753322 $$
+\end{itemize}
+Per tant, l'interval de confiança de \textit{Wald} del $95\%$ per al paràmetre $\pi$ és $\left[ \frac{3}{11} \pm 1,96 \cdot \frac{2}{11}\sqrt{\frac{2}{11}} \right]\simeq$\\ $ \simeq \left[ 0,120773308, \hspace{0.4em} 0,424681238 \right] \Longrightarrow$\\
+$\Longrightarrow$\fcolorbox{black}{white}{ \textcolor{blue}{L'interval de confiança de \textit{Wald} del $95\%$ és $\pi \in \left[ 0,121, \hspace{0.4em} 0,425 \right]$} }\\\\
+Observem que, en aquest cas, interval conté valor que el paràmetre $\pi$ si pot obtenir, però, l'interval de Confiança de \textit{Wald} no sempre dona un interval que contingui valors que pot obtenir el paràmetre (com valors negatius o majors que $1$). Si és el cas, és necessari reparametritzar el paràmetre amb la funció $logit$ o $\log$ que pot portar la imatge de l'estimador a l'interval $[0,1]$.
+\newpage
+
+\section{Resolució de cinquè apartat}
+Reparamatritzem el paràmetre $\pi$ per la funció $logit$ i calculem l'interval de confiança de \textit{Wald} del $95\%$ per a la reparamerització.
+\begin{itemize}
+\item Calculem la reparametrització $\eta = \log\left( \frac{\pi}{1-\pi} \right)$:
+\begin{multline*}
+\eta = \log\left( \frac{\pi}{1-\pi} \right) \Rightarrow \frac{\pi}{1-\pi} = e^{\eta} \Rightarrow \pi = (1-\pi)e^{\eta}\Rightarrow \pi = \frac{e^{\eta}}{1+e^{\eta}}
+\end{multline*}
+\item Càlcul de la log-versemblança de $\eta$ utilitzant els càlculs de \href{estimador}{\textcolor{blue(ncs)}{l'apartat 3}}: $l(\eta|x_i)$
+\begin{multline*}
+l(\pi|x_i)= n\log(\pi)+ \left(-n + \sum_{i=1}^n x_i\right)\log(1-\pi) \Rightarrow \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq} \\ \Rightarrow l(\eta|x_i) = n\log\left(\frac{e^{\eta}}{1+e^{\eta}}\right)+ \left(-n + \sum_{i=1}^n x_i\right)\log\left(1-\frac{e^{\eta}}{1+e^{\eta}}\right) = \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+\\ = n\log\left(\frac{e^{\eta}}{1+e^{\eta}}\right)+ \left(-n + \sum_{i=1}^n x_i\right)\log\left(\frac{1}{1+e^{\eta}}\right) = \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq} \\ =n\left( \eta -\log(1+e^\eta)\right) - \left(-n + \sum_{i=1}^n x_i\right)\log\left( 1+e^\eta \right) = n\eta -\log\left( 1+e^\eta \right)\sum_{i=1}^n x_i
+\end{multline*}
+\item Calculem la informació de Fisher per al paràmetre $\eta$: $I(\eta)$
+\begin{multline*}
+I(\eta)= - \frac{\partial^2}{\partial^2\eta} l(\eta|x_i) = - \frac{\partial}{\partial\eta} \left( n-\frac{e^\eta\sum_{i=1}^n x_i}{1+e^\eta} \right) = \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}\\ = - \frac{\partial}{\partial\eta} \left( n-\frac{e^\eta\sum_{i=1}^n (x_i) + \sum_{i=1}^n (x_i) - \sum_{i=1}^n (x_i) }{1+e^\eta} \right) =\textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq} \\ = - \frac{\partial}{\partial\eta} \left( n-\sum_{i=1}^n (x_i) + \frac{\sum_{i=1}^n (x_i)}{1+e^\eta} \right) = \frac{e^\eta\sum_{i=1}^n (x_i)}{(1+e^\eta)^2} \Longrightarrow\textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq} \\
+\Longrightarrow I(\eta)= \frac{e^{\log\left( \frac{\pi}{1-\pi}\right)}\sum_{i=1}^n (x_i)}{\left(1+e^{\log\left( \frac{\pi}{1-\pi}\right)}\right)^2} = \frac{ \frac{\pi}{1-\pi}\sum_{i=1}^n (x_i)}{\left(1+\frac{\pi}{1-\pi}\right)^2}\textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+\end{multline*}
+\item Calculem ara el valor de l'estimador $\hat{\eta}$ i de la informació de Fisher $I(\hat{\eta})$:
+\begin{multline*}
+\hat{\eta} = \log\left( \frac{\hat{\pi}}{1-\hat{\pi}} \right) = \log\left( \frac{\frac{3}{11}}{1-\frac{3}{11}} \right) = \log\left( \frac{\frac{3}{11}}{\frac{8}{11}} \right) = \log\left( \frac{3}{8} \right) = -0,980829253
+\end{multline*}
+\begin{multline*}
+I(\hat{\eta}) = \frac{ \frac{\hat{\pi}}{1-\hat{\pi}}\sum_{i=1}^n (x_i)}{\left(1+\frac{\hat{\pi}}{1-\hat{\pi}}\right)^2} = \frac{ 33 \cdot \frac{3}{8}}{\left(1+\frac{3}{8}\right)^2} = \frac{72}{11} = 6.\bar{54}
+\end{multline*}
+\end{itemize}
+\newpage
+Calculem ara l'interval de confiança de \textit{Wald} del $95\%$ del paràmetre $\eta$:
+\begin{multline*}
+\eta \in \left[ \hat{\eta} \pm z_{0,975} \cdot \sqrt{I^{-1}(\hat{\eta})} \right] = \left[\log\left( \frac{3}{8} \right) \pm 1,96 \cdot \sqrt{\frac{11}{72}} \right] \simeq \left[-0,981 \pm 1,96 \cdot \sqrt{0,153} \right] = \\
+= \left[ -1,75, \hspace{0.4em} -0,215 \right] \Longrightarrow \textcolor{white}{qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq}
+\end{multline*}
+$\Longrightarrow$\fcolorbox{black}{white}{ \textcolor{blue}{L'interval de confiança de \textit{Wald} del $95\%$ reparametritzat per $\eta$ és $\eta \in \left[ -1,75, \hspace{0.4em} -0,215 \right]$} }\\\\
+Recalcar, que l'estimador màxim versemblant de $\eta$: $\hat{\eta}=\log\left( \frac{\hat{\pi}}{1-\hat{\pi}} \right)$, ja que l'estimador és invariant a les transformacions, per la qual cosa si $\hat{\pi}$ és el màxim versemblant sense la transformació, una vegada aplicada, el màxim versemblant de la transformació és la transformació aplicada a $\hat{\pi}$.
+\newpage
+
+\section{Resolució del sisè apartat}
+Observem que els intervals trobats a \href{se}{\textcolor{blue(ncs)}{l'apartat 5}} i \href{se}{\textcolor{blue(ncs)}{l'apartat 6}} ( $ \left[ 0,121, \hspace{0.4em} 0,425 \right]$ i $\left[ -1,75, \hspace{0.4em} -0,215 \right]$ respectivament), difereixen en els valors que contenen. Això és perquè en \href{se}{\textcolor{blue(ncs)}{l'apartat 5}} és l'interval en el qual es troba l'estimador real, $\pi$, en el $95\%$ dels experiments i en \href{se}{\textcolor{blue(ncs)}{l'apartat 6}} és l'interval on es troba (en el $95\%$ dels experiments) l'ordre de magnitud de la proporció exit-fracàs, també anomenat \textit{Odds}, (en base neperiana) de l'experiment; essent ($\pi$ i $1-\pi$ l'exit i el fracàs del test respectivament).\\
+Com que l'interval de l'estimador de $\eta$ ésta per sota del 0, deduïm que l'orde del valor de $\frac{\pi}{1-\pi}$ és menor que 1, i per això $1-\pi > \pi$; per tant, hi ha més fracassos que èxits.\\
+Concloem que els tests no són bons.
+\end{document}
