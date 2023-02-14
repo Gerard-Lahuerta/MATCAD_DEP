@@ -1,0 +1,24 @@
+# Declaracio de conjunts d’indexos
+set Fabriques;
+set Botigues;
+
+# Declaracio de parametres:
+param cap_prod{Fabriques};
+param demanda{Botigues};
+param cost_transport{Fabriques,Botigues}; # matriu
+
+#Declaracio de variables:
+var x{Fabriques,Botigues}>=0; # variable matriu
+
+#Func. objectiu
+minimize cost_total: sum{i in Fabriques, j in Botigues}
+x[i,j]*cost_transport[i,j];
+
+# Restriccions indexades
+subject to
+r_capacitat{i in Fabriques}: sum{j in Botigues} x[i,j] <= cap_prod[i];
+r_demanda{j in Botigues}: sum{i in Fabriques} x[i,j] >= demanda[j];
+
+# passar data con --data "nombre del fichero de datos"
+
+end;

@@ -1,0 +1,18 @@
+# Exemple 3
+
+# declaraci´o de les variables ( enteres )
+var x {1..5} >=0 , integer ;
+
+# funci´o objectiu
+maximize z :30 * x [1]+20 * x [2]+40 * x [3]+25 * x [4]+10 * x [5];
+
+# restriccions
+subject to r1 : 2 * x [1]+ x [2]+3 * x [3]+3 * x [4]+ x [5] <= 700;
+subject to r2 : 3 * x [1]+2 * x [2]+2 * x [3]+ x [4]+ x [5] <= 1000;
+
+# PRINT
+solve;
+display x;
+display z;
+
+end;

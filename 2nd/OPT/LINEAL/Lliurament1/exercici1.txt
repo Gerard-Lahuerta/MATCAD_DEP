@@ -1,0 +1,39 @@
+# Declaració de conjunts d’indexos
+set productes;
+
+
+# Declaració de paràmetres
+param Beneficis{productes};
+param Preu{productes};
+param Pressupost_Peix;
+param Preu_Llaunes{productes};
+param Pressupost_Llaunes; 
+param Enllaunament{productes};
+param Temps_Enllaunament_max;
+param Maquines_Enllaunament;
+param Maquines_Test;
+param Temps_Test{productes};
+param Temps_Test_max;
+
+# Declaració de variables:
+var x{productes} >= 0, integer;
+
+# Funció objectiu
+maximize benefici: sum{i in productes} x[i]*Beneficis[i];
+	       
+# Restriccions indexades
+subject to
+pressupost: sum{i in productes} x[i]*Preu[i] <= Pressupost_Peix; #+ Pressupost_Llaunes;
+pressupost_llaunes: sum{i in productes} x[i]*Preu_Llaunes[i] <= Pressupost_Llaunes; # + Pressupost_Peix;
+peix_llaunes : sum{i in productes} x[i]*(Preu[i] + Preu_Llaunes[i]) <= Pressupost_Llaunes + Pressupost_Peix;
+temps_enllaunament: sum{i in productes} x[i]/Enllaunament[i] <= Maquines_Enllaunament*Temps_Enllaunament_max;
+temps_test: sum{i in productes} x[i]/Temps_Test[i] <= Maquines_Test*Temps_Test_max;
+
+# Dades introduïdes per fitxer adicional
+
+# Output dels resultats obtinguts
+solve;
+display x; 
+display benefici;
+
+end;

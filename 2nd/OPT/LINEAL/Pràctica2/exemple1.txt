@@ -1,0 +1,49 @@
+# Exemple taller fusteria
+2
+3 # Declararem els conjunts:
+4 set joguines; # conjunt de joguines
+5
+1
+2 
+6 # Declararem parametres
+7 param benefici{joguines}; #parametre vector indexat a joguines
+8 param hores_fusteria{joguines}; # parametre vector indexat a joguines
+9 param hores_acabat{joguines}; # parametre vector indexat a joguines
+10 param maxim_soldats; # parametre constant
+11
+12 # Declararem variables
+13 var x{i in joguines}>=0, integer; #variable vector indexat a joguines
+14
+15 # Func. objectiu
+16 maximize benefici_total: sum{i in joguines} benefici[i]*x[i];
+17
+18 # Restriccions
+19 subject to
+20 rfusteria: sum{i in joguines} hores_fusteria[i]*x[i] <= 80;
+21 racabat: sum{i in joguines} hores_acabat[i]*x[i] <= 100;
+22 rmaxfust: x[’soldat’] <= maxim_soldats;
+23
+24 solve; # demanem que resolgui el problema abans de mostrar resultat
+25 display x; #imprimir per pantalla la solucio
+26
+27 #Bloc de dades
+28 data;
+29
+30 # Especifiquem els elements del conjunt joguines.
+31 set joguines:= soldat tren;
+32
+33 #Valors dels parametres
+34 param benefici:=
+35 soldat 3
+36 tren 2;
+37
+38 param hores_fusteria:=
+39 soldat 1
+40 tren 1;
+41
+42 param hores_acabat:=
+43 soldat 2
+44 tren 1;
+45
+46 param maxim_soldats:=40;
+47 end;

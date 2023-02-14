@@ -1,0 +1,13 @@
+data;
+set Fabriques:= A B;
+set Botigues:= 1 2 3;
+param cap_prod:=
+A 800 B 1500;
+param demanda:=
+1 1000 2 700 3 600;
+
+# Parametre matricial
+param cost_transport:
+1 2 3:=
+A 30 70 10
+B 20 20 60;

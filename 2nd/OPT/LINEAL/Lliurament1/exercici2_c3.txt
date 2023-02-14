@@ -1,0 +1,38 @@
+# Declaració de conjunts d’indexos
+set ciutats;
+set incineradores;
+set abocadors;
+
+# Declaració de paràmetres
+param PT;
+param res_ciu{ciutats};
+param res_inc{incineradores};
+param fac_res_inc;
+param dist_ciu_inc{ciutats, incineradores};
+param dist_inc_abo{incineradores, abocadors};
+param cost_inc{incineradores};
+param max_ton{ciutats, incineradores}; 
+
+# Declaració de variables:
+var x{ciutats, incineradores} >= 0;
+var y{incineradores, abocadors} >= 0; 
+
+# Funció objectiu
+minimize cost:  PT * sum{i in ciutats, j in incineradores} dist_ciu_inc[i,j]*x[i,j] + sum{i in ciutats, j in incineradores} cost_inc[j]*x[i,j] + PT * sum{k in abocadors, j in incineradores} dist_inc_abo[j,k]*y[j,k];
+	       
+# Restriccions indexades
+subject to
+res_env_ciu{i in ciutats}: sum{j in incineradores} x[i,j] = res_ciu[i]; 
+res_reb_inc{j in incineradores}: sum{i in ciutats} x[i,j] <= res_inc[j];
+res_env_inc{j in incineradores}: sum{k in abocadors} y[j,k] = 0.2*sum{i in ciutats} x[i,j];
+max_viat{i in ciutats, j in incineradores}: x[i,j] <= max_ton[i,j]; 
+
+# Dades introduïdes per fitxer adicional
+
+# Output dels resultats obtinguts
+solve;
+display x; 
+display y;
+display cost;
+
+end;

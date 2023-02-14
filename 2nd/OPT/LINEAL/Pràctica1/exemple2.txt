@@ -1,0 +1,19 @@
+# Exemple 2. Introducci´o al glpk
+
+# Variables
+var x {1..4} >=0;
+
+# Funci´o objectiu
+minimize z : x [1]+ x [2] -2 * x [3]+ x [4];
+
+# Restriccions
+subject to r1 : x [1] - x [2] - x [3] -2 * x [4] >= -2;
+subject to r2 : x [1]+ x [2]+ x [4] <= 8;
+subject to r3 : x [1]+2 * x [2] - x [3] = 4;
+
+# Print per pantalla
+solve;
+display x;
+display z;
+
+end ;

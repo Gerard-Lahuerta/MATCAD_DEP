@@ -1,0 +1,18 @@
+data;
+
+# Conjunts
+set productes := A S;
+
+# Parametres (valors)
+param Beneficis := A 0.26 S 0.2;
+param Preu := A 0.3 S 0.2;
+param Pressupost_Peix := 56000;
+param Preu_Llaunes := A 0.11 S 0.08;
+param Pressupost_Llaunes := 140000;
+param Enllaunament := A 1600 S 2000;
+param Temps_Enllaunament_max := 300;
+param Maquines_Enllaunament := 2;
+param Maquines_Test := 1;
+param Temps_Test := A 800 S 800;
+param Temps_Test_max := 640;
+

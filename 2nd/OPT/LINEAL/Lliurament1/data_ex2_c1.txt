@@ -1,0 +1,29 @@
+data;
+
+# Conjunts
+set ciutats:= 1 2;
+set incineradores := A B;
+set abocadors := N S;
+
+
+# Parametres (valors)
+param PT := 3;
+param res_ciu := 1 500 2 400;
+param res_inc := A 500 B 600;
+param fac_res_inc := 0.2;
+param cost_inc := A 40 B 30;
+
+
+# Parametres (matricials)
+
+param dist_ciu_inc: 
+    A    B :=
+1  30   20
+2  36   42;
+
+param dist_inc_abo: 
+    N    S :=
+A   5    8
+B   9    6;
+
+

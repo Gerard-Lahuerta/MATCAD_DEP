@@ -1,0 +1,40 @@
+set aliments;
+
+param cost{aliments};
+param calories{aliments};
+param proteines{aliments};
+param vitamines{aliments};
+
+param minim_calories;
+param minim_proteines;
+param minim_vitamines;
+param max_calories;
+
+var x{aliments}>=0;
+
+minimize cost_total: sum{i in aliments} cost[i]*x[i];
+
+subject to r1:sum{i in aliments} calories[i]*x[i] <= max_calories;
+subject to r1_1:sum{i in aliments} calories[i]*x[i] >= minim_calories;
+subject to r2:sum{i in aliments} proteines[i]*x[i] >= minim_proteines;
+subject to r3:sum{i in aliments} vitamines[i]*x[i] >= minim_vitamines;
+
+solve;
+
+
+data;
+
+set aliments:= a1 a2 a3;
+
+param minim_calories:= 16000;
+param minim_proteines := 2;
+param minim_vitamines:= 3;
+param max_calories := 18000;
+
+param: cost calories proteines vitamines:=
+a1 0.8 3600 0.25 0.7
+a2 0.6 2000 0.35 0.4
+a3 0.2 1600 0.15 0.25;
+
+end;
+
